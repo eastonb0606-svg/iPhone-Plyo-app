@@ -1,0 +1,2263 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spring 12"><meta name="theme-color" content="#eef1f4">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}img{max-width:100%}</style>
+</head><body>
+<title>Spring 12 Training</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap">
+<style>
+/* Layout: one phone-width column, sticky week header, bottom tab bar; sessions read like spreadsheet rows */
+:root {
+  --bg: #eef1f4;
+  --surface: #ffffff;
+  --surface-2: #e4e9ee;
+  --fg: #142130;
+  --muted: #5a6876;
+  --line: #d2d9e0;
+  --accent: #2346d0;
+  --accent-soft: #dfe6ff;
+  --hot: #d9481f;
+  --hot-soft: #fde4da;
+  --calm: #0d8473;
+  --calm-soft: #d5f1ec;
+  --gold: #a86a00;
+  --gold-soft: #fbedd0;
+  --good: #1d7f43;
+  --bad: #b3261e;
+  --fig: #142130;
+  --fig-far: #9cadbf;
+  --prop: #dbe1e7;
+  --prop-edge: #b9c3cd;
+  --zone: #e4eaf0;
+  --zone-hot: #fde1d6;
+  --chalk: #c6d0da;
+  --ball: #d4682a;
+  --on-s: #ffffff;
+  --shadow: 0 1px 2px rgba(20, 33, 48, .06), 0 4px 14px rgba(20, 33, 48, .06);
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
+  --body: "IBM Plex Sans", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1318; --surface: #151d25; --surface-2: #1d2731; --fg: #e5ebf1; --muted: #93a2b0; --line: #2a3643;
+    --accent: #8aa2ff; --accent-soft: #1f2a52; --hot: #ff8a5f; --hot-soft: #3d2117; --calm: #45c9b2; --calm-soft: #123630;
+    --gold: #f0b54a; --gold-soft: #3a2c10; --good: #5fd08b; --bad: #ff8178;
+    --fig: #e5ebf1; --fig-far: #5f7286; --prop: #24303c; --prop-edge: #374655; --zone: #1f2a35; --zone-hot: #3a2219; --chalk: #3a4857; --ball: #f08a4b; --on-s: #0d1318;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 4px 14px rgba(0, 0, 0, .25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1318; --surface: #151d25; --surface-2: #1d2731; --fg: #e5ebf1; --muted: #93a2b0; --line: #2a3643;
+  --accent: #8aa2ff; --accent-soft: #1f2a52; --hot: #ff8a5f; --hot-soft: #3d2117; --calm: #45c9b2; --calm-soft: #123630;
+  --gold: #f0b54a; --gold-soft: #3a2c10; --good: #5fd08b; --bad: #ff8178;
+  --fig: #e5ebf1; --fig-far: #5f7286; --prop: #24303c; --prop-edge: #374655; --zone: #1f2a35; --zone-hot: #3a2219; --chalk: #3a4857; --ball: #f08a4b; --on-s: #0d1318;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 4px 14px rgba(0, 0, 0, .25);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { background: var(--bg); color: var(--fg); font: 400 16px/1.5 var(--body); margin: 0; -webkit-tap-highlight-color: transparent; }
+button, input, textarea, select { font: inherit; color: inherit; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+.wrap { max-width: 640px; margin: 0 auto; padding-inline: 16px; padding-block: 0 calc(96px + env(safe-area-inset-bottom, 0px)); }
+.view { display: flex; flex-direction: column; gap: 16px; padding-top: 12px; }
+
+/* type */
+h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: .01em; line-height: 1.05; margin: 0; text-wrap: balance; }
+h1 { font-size: 34px; }
+h2 { font-size: 24px; }
+h3 { font-size: 19px; }
+.eyebrow { font: 600 12px/1.2 var(--body); text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+.muted { color: var(--muted); }
+.small { font-size: 14px; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+p { margin: 0; }
+ol, ul { margin: 0; padding-left: 1.25em; }
+li + li { margin-top: 6px; }
+
+/* header */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); margin-inline: -16px; padding: 10px 16px 10px; border-bottom: 1px solid var(--line); }
+.top-row { display: flex; align-items: center; gap: 10px; }
+.brand { font: 700 15px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.brand b { color: var(--fg); }
+.sync { margin-left: auto; font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.sync i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); display: inline-block; }
+.sync.on i { background: var(--good); }
+
+/* week control */
+.week { display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; gap: 8px; margin-top: 8px; }
+.icon-btn { width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; font-size: 22px; cursor: pointer; }
+.icon-btn:disabled { opacity: .35; cursor: default; }
+.week-mid { text-align: center; }
+.week-num { font: 700 30px/1 var(--display); letter-spacing: .02em; }
+.week-num span { color: var(--muted); font-weight: 600; font-size: 22px; }
+.week-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.strip { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; margin-top: 10px; }
+.chip { border: 0; padding: 0; background: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; min-height: 36px; }
+.chip .bar { width: 100%; height: 6px; border-radius: 3px; background: var(--surface-2); position: relative; overflow: hidden; }
+.chip .bar b { position: absolute; inset: 0 auto 0 0; background: var(--accent); }
+.chip .lbl { font: 600 11px/1 var(--mono); color: var(--muted); }
+.chip.cur .lbl { color: var(--fg); font-weight: 700; }
+.chip.cur .bar { outline: 2px solid var(--fg); outline-offset: 1px; }
+.chip.p1 .bar { background: var(--calm-soft); } .chip.p2 .bar { background: var(--accent-soft); } .chip.p3 .bar { background: var(--hot-soft); }
+.chip.p1 .bar b { background: var(--calm); } .chip.p2 .bar b { background: var(--accent); } .chip.p3 .bar b { background: var(--hot); }
+.phase-key { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-top: 4px; font-size: 11px; color: var(--muted); text-align: center; }
+
+/* cards */
+.card { background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.flat { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.banner { border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; font-size: 15px; }
+.banner.test { background: var(--accent-soft); }
+.banner.deload { background: var(--gold-soft); }
+.banner strong { font-family: var(--display); font-size: 18px; letter-spacing: .02em; }
+.banner .btn { align-self: flex-start; }
+
+.badge { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font: 700 26px/1 var(--display); color: var(--on-s); flex: none; }
+.s-A { --s: var(--accent); --s-soft: var(--accent-soft); }
+.s-B { --s: var(--hot); --s-soft: var(--hot-soft); }
+.s-C { --s: var(--calm); --s-soft: var(--calm-soft); }
+.badge { background: var(--s); }
+
+.sess-list { display: flex; flex-direction: column; gap: 10px; }
+.sess { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; padding: 14px; border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); border: 0; text-align: left; cursor: pointer; width: 100%; }
+.sess h3 { font-size: 21px; }
+.sess .meta { font-size: 13px; color: var(--muted); margin-top: 3px; }
+.pill { font: 600 12px/1 var(--body); padding: 6px 9px; border-radius: 999px; background: var(--surface-2); color: var(--muted); white-space: nowrap; }
+.pill.done { background: var(--calm-soft); color: var(--calm); }
+.pill.prog { background: var(--accent-soft); color: var(--accent); }
+.pill.hi { background: var(--hot-soft); color: var(--hot); }
+.pill.lo { background: var(--calm-soft); color: var(--calm); }
+.pill.test { background: var(--accent-soft); color: var(--accent); }
+.pill.dl { background: var(--gold-soft); color: var(--gold); }
+
+.next { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+.btn { border: 0; border-radius: 12px; padding: 12px 16px; font-weight: 600; cursor: pointer; background: var(--fg); color: var(--bg); min-height: 44px; }
+.btn.ghost { background: var(--surface-2); color: var(--fg); }
+.btn.s { background: var(--s); color: var(--on-s); }
+.btn.danger { background: var(--bad); color: #fff; }
+.btn.small { padding: 8px 12px; min-height: 36px; font-size: 14px; }
+.btn:disabled { opacity: .5; }
+
+/* collapsibles */
+details > summary { list-style: none; cursor: pointer; }
+details > summary::-webkit-details-marker { display: none; }
+.chev { width: 18px; height: 18px; flex: none; transition: transform .2s; color: var(--muted); }
+details[open] > summary .chev { transform: rotate(90deg); }
+.fold { border-top: 1px solid var(--line); }
+.fold:first-child { border-top: 0; }
+.fold > summary { display: flex; align-items: center; gap: 10px; padding: 14px 0; font-weight: 600; }
+.fold > .fold-body { padding-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
+.mini > summary { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 14px; color: var(--accent); padding: 4px 0; }
+.mini > div { padding: 6px 0 4px; font-size: 15px; }
+
+/* session view */
+.back { align-self: flex-start; border: 0; background: none; color: var(--accent); font-weight: 600; padding: 6px 0; cursor: pointer; min-height: 40px; }
+.s-head { display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: center; }
+.s-head .badge { width: 56px; height: 56px; font-size: 34px; border-radius: 14px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.gear { font-size: 14px; color: var(--muted); }
+
+.sheet { background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+.sheet-head { display: grid; grid-template-columns: 54px 1fr 48px; gap: 0; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--surface-2); font: 600 11px/1.2 var(--body); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.sheet-head span:last-child { text-align: right; }
+.row { position: relative; border-bottom: 1px solid var(--line); }
+.row:last-child { border-bottom: 0; }
+.row > details > summary { display: grid; grid-template-columns: 54px 1fr; gap: 0; padding: 14px 60px 14px 14px; align-items: start; }
+.row .t { font: 600 13px/1.5 var(--mono); color: var(--muted); padding-top: 1px; }
+.row .bn { font-weight: 600; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.row .rx { font-size: 14px; color: var(--muted); margin-top: 2px; }
+.row .rx b { color: var(--fg); font-weight: 600; }
+.row.checked .bn, .row.checked .rx { opacity: .55; }
+.row.checked .bn .label { text-decoration: line-through; text-decoration-thickness: 1.5px; }
+.tag { font: 700 10px/1 var(--body); letter-spacing: .08em; text-transform: uppercase; padding: 4px 6px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); }
+.chk { position: absolute; right: 8px; top: 6px; width: 48px; height: 48px; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
+.chk i { width: 28px; height: 28px; border-radius: 9px; border: 2px solid var(--line); display: grid; place-items: center; transition: background .15s, border-color .15s; }
+.chk[aria-pressed="true"] i { background: var(--s); border-color: var(--s); }
+.chk svg { width: 16px; height: 16px; opacity: 0; color: var(--on-s); }
+.chk[aria-pressed="true"] svg { opacity: 1; }
+.row-body { padding: 0 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+.how { font-size: 15px; background: var(--s-soft); border-radius: 10px; padding: 10px 12px; }
+.nine { display: flex; flex-direction: column; gap: 8px; }
+.nine-row { display: grid; grid-template-columns: 54px 1fr; font-size: 15px; }
+.nine-row .t { font: 600 13px/1.5 var(--mono); color: var(--muted); }
+
+/* exercise cards */
+.ex { border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+.ex > summary { display: flex; align-items: center; gap: 10px; padding: 12px; }
+.ex > summary .nm { font-weight: 600; flex: 1; min-width: 0; }
+.ex > summary .ds { font: 500 13px/1.2 var(--mono); color: var(--muted); text-align: right; }
+.ex-body { padding: 0 12px 14px; display: flex; flex-direction: column; gap: 12px; }
+.demo { position: relative; background: var(--surface); border-radius: 10px; border: 1px solid var(--line); overflow: hidden; }
+.demo .anim-svg { width: 100%; height: auto; display: block; }
+.anim-btn { position: absolute; right: 6px; bottom: 6px; border: 0; border-radius: 8px; background: var(--surface-2); color: var(--fg); font: 600 12px/1 var(--body); padding: 7px 9px; cursor: pointer; }
+.cue { display: flex; gap: 10px; align-items: baseline; font-size: 15px; }
+.cue b { font: 700 11px/1 var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--s, var(--accent)); flex: none; }
+.cue q { font-family: var(--display); font-size: 21px; font-weight: 600; quotes: "“" "”"; }
+.ex-body h4 { margin: 0; font: 600 12px/1 var(--body); text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+.ex-body ol li::marker { font-family: var(--mono); color: var(--muted); }
+.ext { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 15px; text-decoration: none; padding: 6px 0; }
+.note { font-size: 14px; border-left: 3px solid var(--gold); padding: 2px 0 2px 10px; }
+.stop { display: grid; grid-template-columns: 22px 1fr; gap: 8px; font-size: 15px; background: var(--hot-soft); border-radius: 12px; padding: 12px; }
+.stop svg { width: 20px; height: 20px; color: var(--hot); margin-top: 2px; }
+
+/* finish */
+.scale { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
+.scale button { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; min-height: 40px; font: 600 15px/1 var(--mono); cursor: pointer; padding: 0; }
+.scale button[aria-pressed="true"] { background: var(--s, var(--fg)); color: var(--on-s); border-color: transparent; }
+.scale-key { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+textarea, input[type="text"], input[type="number"], input[inputmode] { width: 100%; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); padding: 10px 12px; min-height: 44px; }
+textarea { min-height: 84px; resize: vertical; }
+label.lbl { font-size: 14px; font-weight: 600; display: block; margin-bottom: 6px; }
+.toggle { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.toggle input { width: 20px; height: 20px; accent-color: var(--s, var(--accent)); }
+
+/* tests */
+.test-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.test-grid label { font: 600 11px/1.2 var(--body); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); display: block; margin-bottom: 4px; }
+.test-grid input { font-family: var(--mono); font-size: 15px; padding: 8px; text-align: center; }
+.delta { font: 600 13px/1.2 var(--mono); }
+.delta.up { color: var(--good); } .delta.down { color: var(--bad); }
+.meter { position: relative; height: 34px; margin-top: 4px; }
+.meter .track { position: absolute; left: 0; right: 0; top: 12px; height: 10px; border-radius: 5px; background: var(--surface-2); overflow: hidden; }
+.meter .fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); border-radius: 5px; }
+.meter .mk { position: absolute; top: 6px; width: 2px; height: 22px; background: var(--fg); }
+.meter .mk span { position: absolute; top: 24px; transform: translateX(-50%); font: 600 10px/1 var(--mono); color: var(--muted); white-space: nowrap; }
+.calc { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; align-items: end; }
+.calc-out { font: 700 22px/1 var(--mono); }
+.check-list { display: flex; flex-direction: column; gap: 8px; }
+.tabs-mini { display: flex; gap: 6px; flex-wrap: wrap; }
+.tabs-mini button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 8px 12px; font-weight: 600; font-size: 14px; cursor: pointer; }
+.tabs-mini button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: transparent; }
+
+/* log table */
+.table-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 14px; }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 11px/1.2 var(--body); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); background: var(--surface-2); position: sticky; top: 0; }
+tr:last-child td { border-bottom: 0; }
+td.num { white-space: nowrap; }
+td.notes { min-width: 200px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.stat { background: var(--surface); border-radius: 14px; padding: 12px; box-shadow: var(--shadow); }
+.stat b { display: block; font: 700 28px/1 var(--display); }
+.stat span { font-size: 12px; color: var(--muted); }
+.empty { text-align: center; padding: 28px 16px; color: var(--muted); }
+
+/* research */
+.lvl { font: 700 10px/1 var(--body); letter-spacing: .08em; text-transform: uppercase; padding: 4px 7px; border-radius: 6px; }
+.lvl.Strong { background: var(--calm-soft); color: var(--calm); }
+.lvl.Moderate { background: var(--accent-soft); color: var(--accent); }
+.lvl.Mixed { background: var(--gold-soft); color: var(--gold); }
+.lvl.Opinion { background: var(--surface-2); color: var(--muted); }
+.src { font-size: 14px; display: flex; flex-direction: column; gap: 4px; }
+dl.gloss { margin: 0; display: grid; grid-template-columns: minmax(96px, 34%) 1fr; gap: 10px 12px; font-size: 15px; }
+dl.gloss dt { font-weight: 600; }
+dl.gloss dd { margin: 0; }
+.phase-table { display: grid; gap: 8px; }
+.phase-row { display: grid; grid-template-columns: 92px 1fr; gap: 10px; font-size: 15px; padding: 10px 0; border-top: 1px solid var(--line); }
+.phase-row:first-child { border-top: 0; }
+.cue-sheet { display: grid; grid-template-columns: 1fr; gap: 0; }
+.cue-sheet div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+.cue-sheet div:first-child { border-top: 0; }
+.cue-sheet q { font-family: var(--display); font-size: 19px; font-weight: 600; text-align: right; }
+
+/* tab bar */
+.tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: var(--surface); border-top: 1px solid var(--line); padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)); display: grid; grid-template-columns: repeat(4, 1fr); }
+.tabbar button { border: 0; background: none; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0; font: 600 11px/1 var(--body); color: var(--muted); cursor: pointer; min-height: 48px; }
+.tabbar button svg { width: 24px; height: 24px; }
+.tabbar button[aria-current="page"] { color: var(--fg); }
+.tabbar button[aria-current="page"] svg { color: var(--accent); }
+
+/* timer */
+.fab { position: fixed; right: 16px; bottom: calc(78px + env(safe-area-inset-bottom, 0px)); z-index: 25; border: 0; border-radius: 999px; background: var(--fg); color: var(--bg); padding: 12px 16px; font: 700 15px/1 var(--mono); box-shadow: var(--shadow); cursor: pointer; display: flex; align-items: center; gap: 8px; min-height: 48px; }
+.fab svg { width: 18px; height: 18px; }
+.drawer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: var(--surface); border-radius: 20px 20px 0 0; box-shadow: 0 -8px 30px rgba(0,0,0,.18); padding: 16px 16px calc(20px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 14px; max-width: 640px; margin: 0 auto; }
+.scrim { position: fixed; inset: 0; z-index: 35; background: rgba(10, 16, 22, .35); }
+.timer-big { font: 700 64px/1 var(--mono); text-align: center; font-variant-numeric: tabular-nums; }
+.timer-big.done { color: var(--hot); }
+.presets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.presets button { border: 1px solid var(--line); background: var(--bg); border-radius: 10px; min-height: 44px; font: 600 15px/1 var(--mono); cursor: pointer; }
+.row-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+.toast { position: fixed; left: 50%; bottom: calc(140px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-weight: 600; z-index: 50; box-shadow: var(--shadow); max-width: calc(100% - 32px); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+.anim-svg{width:100%;height:auto;display:block}
+.a-ground{stroke:var(--line,#9aa4ae);stroke-width:1.5}
+.a-limb{fill:none;stroke:var(--fig,#16222e);stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}
+.a-far{stroke:var(--fig-far,#9fb0c2)}
+.a-torso{stroke:var(--fig,#16222e);stroke-width:5.5;stroke-linecap:round}
+.a-head{fill:var(--fig,#16222e)}
+.a-prop{fill:var(--prop,#d9dee4);stroke:var(--prop-edge,#b8c0c9);stroke-width:1}
+.a-cone{fill:var(--hot,#e2552b)}
+.a-target{fill:none;stroke:var(--accent,#2952e3);stroke-width:2.5}
+.a-guide{stroke:var(--line,#9aa4ae);stroke-dasharray:2 3}
+.a-mark{stroke:var(--accent,#2952e3);stroke-width:2}
+.a-arrow{fill:none;stroke:var(--accent,#2952e3);stroke-width:2}
+.a-small,.m-label{font:600 9px/1 system-ui,sans-serif;fill:var(--muted,#5b6875)}
+.a-cap{font:700 10px/1 system-ui,sans-serif;fill:var(--accent,#2952e3);letter-spacing:.02em}
+.a-ball{fill:var(--ball,#d4682a);stroke:var(--fig,#16222e);stroke-width:1}
+.m-trail{fill:none;stroke:var(--accent,#2952e3);stroke-opacity:.35;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.m-dot{fill:var(--accent,#2952e3);stroke:var(--bg,#fff);stroke-width:2}
+.m-nose{fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.m-cone{fill:var(--hot,#e2552b)}
+.m-marker{fill:var(--hot,#e2552b)}
+.m-line{stroke:var(--line,#9aa4ae);stroke-width:1.5}
+.m-strong{stroke:var(--fg,#16222e);stroke-width:2}
+.m-faint{stroke-dasharray:3 4}
+.m-chalk{stroke:var(--chalk,#c9d2db);stroke-width:5;stroke-linecap:round}
+.m-zone{fill:var(--zone,#e6ecf2);stroke:none}
+.m-box{fill:none;stroke:var(--line,#9aa4ae);stroke-dasharray:4 4;stroke-width:1.5}
+.m-hot{fill:var(--zone-hot,#fde3d9)}
+.m-cue{transition:opacity .1s}
+.m-cuebg{fill:var(--fg,#16222e)}
+.m-cuetext{font:800 14px/1 system-ui,sans-serif;fill:var(--bg,#fff)}
+.m-spot{fill:none;stroke:var(--accent,#2952e3);stroke-dasharray:3 3;stroke-width:1.5}
+.m-center{fill:var(--zone,#e6ecf2)}
+.f-foot{fill:var(--fig,#16222e)}
+.f-L{fill:var(--fig-far,#5c7a99)}
+.a-plate{fill:var(--prop-edge,#b8c0c9);stroke:var(--fig,#16222e);stroke-width:2}
+
+</style>
+<div class="wrap"><main id="app" aria-live="polite"></main></div>
+<nav id="tabbar" class="tabbar" aria-label="Sections"></nav>
+<button id="fab" class="fab" hidden aria-label="Open timer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg><span id="fab-t">Timer</span></button>
+<script>
+/* ---------- Motion demos: stick figures, top-down drill maps, footwork ---------- */
+const Anim = (() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  const R = Math.PI / 180;
+  const SEG = { T: 34, UA: 15, FA: 14, TH: 23, SH: 22, FT: 8, HE: 2.5, HR: 6.5, NK: 2.5 };
+  const ease = {
+    io: t => 0.5 - 0.5 * Math.cos(Math.PI * t),
+    lin: t => t,
+    in: t => t * t,
+    out: t => 1 - (1 - t) * (1 - t),
+    step: t => (t < 1 ? 0 : 1),
+  };
+  const el = (tag, attrs = {}, parent) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const lerpArr = (a, b, t) => a.map((v, i) => lerp(v, b[i], t));
+
+  /* ---------- stick figure ---------- */
+  const DEF = { x: 120, air: 0, g: 0, t: 0, lf: [0, 0, 90], lb: [0, 0, 90], af: [0, 0], ab: [0, 0] };
+  function fullPose(p, view) {
+    const d = Object.assign({}, DEF, view === 'front' ? { lf: [0, 0, 90], lb: [0, 0, -90] } : {}, p);
+    d.lf = d.lf.length === 2 ? [...d.lf, view === 'front' ? 90 : 90] : d.lf;
+    d.lb = d.lb.length === 2 ? [...d.lb, view === 'front' ? -90 : 90] : d.lb;
+    return d;
+  }
+  const dir = a => [Math.sin(a * R), Math.cos(a * R)];
+  const add = (p, a, L) => { const v = dir(a); return [p[0] + v[0] * L, p[1] + v[1] * L]; };
+  function solve(p, view, ground, anchor) {
+    const front = view === 'front';
+    const up = [Math.sin(p.t * R), -Math.cos(p.t * R)];
+    const perp = [Math.cos(p.t * R), Math.sin(p.t * R)];
+    const hip = [0, 0];
+    const neck = [up[0] * SEG.T, up[1] * SEG.T];
+    const head = [neck[0] + up[0] * (SEG.NK + SEG.HR), neck[1] + up[1] * (SEG.NK + SEG.HR)];
+    const sh = [up[0] * SEG.T * 0.9, up[1] * SEG.T * 0.9];
+    const so = front ? 8 : 0, ho = front ? 4.5 : 0;
+    const shF = [sh[0] + perp[0] * so, sh[1] + perp[1] * so];
+    const shB = [sh[0] - perp[0] * so, sh[1] - perp[1] * so];
+    const hF = [ho, 0], hB = [-ho, 0];
+    const ft = front ? 4.5 : SEG.FT;
+    const leg = (h, a) => {
+      const k = add(h, a[0], SEG.TH), an = add(k, a[1], SEG.SH);
+      const toe = add(an, a[2], ft), heel = add(an, a[2] + 180, front ? 0 : SEG.HE);
+      return { hip: h, knee: k, ankle: an, toe, heel };
+    };
+    const arm = (s, a) => { const e = add(s, a[0], SEG.UA); return { sh: s, elbow: e, hand: add(e, a[1], SEG.FA) }; };
+    const L = { f: leg(hF, p.lf), b: leg(hB, p.lb) };
+    const A = { f: arm(shF, p.af), b: arm(shB, p.ab) };
+    const pts = [head, neck, L.f.knee, L.f.ankle, L.f.toe, L.f.heel, L.b.knee, L.b.ankle, L.b.toe, L.b.heel, A.f.elbow, A.f.hand, A.b.elbow, A.b.hand];
+    let maxY = -1e9;
+    if (anchor) {
+      const named = { toeF: L.f.toe, toeB: L.b.toe, heelF: L.f.heel, heelB: L.b.heel, kneeF: L.f.knee, kneeB: L.b.knee, ankleF: L.f.ankle, ankleB: L.b.ankle, handF: A.f.hand, handB: A.b.hand, elbowF: A.f.elbow };
+      anchor.forEach(n => { if (named[n][1] > maxY) maxY = named[n][1]; });
+    } else pts.forEach(q => { const y = q === head ? q[1] + SEG.HR : q[1]; if (y > maxY) maxY = y; });
+    const oy = ground - p.g - maxY - p.air, ox = p.x;
+    const T = q => [q[0] + ox, q[1] + oy];
+    const out = { head: T(head), neck: T(neck), hip: T(hip), L: {}, A: {} };
+    for (const s of ['f', 'b']) {
+      out.L[s] = {}; for (const k in L[s]) out.L[s][k] = T(L[s][k]);
+      out.A[s] = {}; for (const k in A[s]) out.A[s][k] = T(A[s][k]);
+    }
+    out.hipMid = T([0, 0]);
+    return out;
+  }
+  const P = q => q[0].toFixed(1) + ',' + q[1].toFixed(1);
+
+  function propSVG(g, pr, sc) {
+    const G = sc.ground;
+    switch (pr.type) {
+      case 'step': el('rect', { x: pr.x, y: G - pr.h, width: pr.w, height: pr.h, rx: 2, class: 'a-prop' }, g); break;
+      case 'box': el('rect', { x: pr.x, y: G - pr.h, width: pr.w, height: pr.h, rx: 3, class: 'a-prop' }, g); break;
+      case 'bench':
+        el('rect', { x: pr.x, y: G - pr.h, width: pr.w, height: 5, rx: 2, class: 'a-prop' }, g);
+        el('rect', { x: pr.x + 4, y: G - pr.h + 5, width: 4, height: pr.h - 5, class: 'a-prop' }, g);
+        el('rect', { x: pr.x + pr.w - 8, y: G - pr.h + 5, width: 4, height: pr.h - 5, class: 'a-prop' }, g);
+        break;
+      case 'couch':
+        el('rect', { x: pr.x, y: G - pr.h, width: pr.w, height: pr.h, rx: 6, class: 'a-prop' }, g);
+        el('rect', { x: pr.x + (pr.back === 'left' ? 0 : pr.w - 12), y: G - pr.h - 22, width: 12, height: 26, rx: 5, class: 'a-prop' }, g);
+        break;
+      case 'wall': el('rect', { x: pr.x, y: 6, width: 8, height: G - 6, class: 'a-prop' }, g); break;
+      case 'cone': el('path', { d: `M${pr.x - 6},${G} L${pr.x},${G - 13} L${pr.x + 6},${G} Z`, class: 'a-cone' }, g); break;
+      case 'target':
+        el('line', { x1: pr.x, y1: 0, x2: pr.x, y2: pr.y - 6, class: 'a-guide' }, g);
+        el('circle', { cx: pr.x, cy: pr.y, r: 6, class: 'a-target' }, g); break;
+      case 'line': el('line', { x1: pr.x, y1: G - 1, x2: pr.x, y2: G + 4, class: 'a-mark' }, g); break;
+      case 'mark':
+        el('line', { x1: pr.x, y1: G + 2, x2: pr.x, y2: G + 9, class: 'a-mark' }, g);
+        if (pr.label) { const t = el('text', { x: pr.x, y: G + 17, class: 'a-small', 'text-anchor': 'middle' }, g); t.textContent = pr.label; }
+        break;
+      case 'arrow': {
+        const y = pr.y; el('line', { x1: pr.x1, y1: y, x2: pr.x2, y2: y, class: 'a-arrow' }, g);
+        const s = pr.x2 > pr.x1 ? -1 : 1;
+        el('path', { d: `M${pr.x2 + s * 6},${y - 4} L${pr.x2},${y} L${pr.x2 + s * 6},${y + 4}`, class: 'a-arrow' }, g);
+        if (pr.label) { const t = el('text', { x: (pr.x1 + pr.x2) / 2, y: y - 5, class: 'a-small', 'text-anchor': 'middle' }, g); t.textContent = pr.label; }
+        break;
+      }
+      case 'raw': { const w = el('g', {}, g); w.innerHTML = pr.svg; break; }
+      case 'text': { const t = el('text', { x: pr.x, y: pr.y, class: 'a-small', 'text-anchor': pr.anchor || 'middle' }, g); t.textContent = pr.text; break; }
+    }
+  }
+
+  function buildFig(svg, sc) {
+    const view = sc.view || 'side';
+    const keys = sc.keys.map(k => Object.assign({}, k, { p: fullPose(k.p, view) }));
+    el('line', { x1: 0, y1: sc.ground, x2: sc.w, y2: sc.ground, class: 'a-ground' }, svg);
+    const pg = el('g', {}, svg);
+    (sc.props || []).forEach(pr => propSVG(pg, pr, sc));
+    const fg = el('g', {}, svg);
+    const far = view === 'front' ? 'a-limb' : 'a-limb a-far';
+    const legB = el('polyline', { class: far }, fg), armB = el('polyline', { class: far }, fg), heelB = el('line', { class: far }, fg);
+    const torso = el('line', { class: 'a-torso' }, fg);
+    const head = el('circle', { r: SEG.HR, class: 'a-head' }, fg);
+    const legF = el('polyline', { class: 'a-limb' }, fg), heelF = el('line', { class: 'a-limb' }, fg), armF = el('polyline', { class: 'a-limb' }, fg);
+    const ball = sc.ball ? el('circle', { r: sc.ballR || 6, class: sc.ballClass || 'a-ball' }, svg) : null;
+    const cap = el('text', { x: 8, y: 16, class: 'a-cap' }, svg);
+    const total = keys.reduce((s, k, i) => s + (i ? k.d : 0), 0) + (sc.tail || 0);
+    const ballPos = (pose, k) => {
+      if (!k.ball) return null;
+      if (k.ball === 'f' || k.ball === 'b') { const f = solve(pose, view, sc.ground, sc.anchor); const h = f.A[k.ball].hand; return [h[0] + (k.ball === 'f' ? 3 : -3), h[1] - 3]; }
+      if (k.ball === 'hands') { const f = solve(pose, view, sc.ground, sc.anchor); return [(f.A.f.hand[0] + f.A.b.hand[0]) / 2, (f.A.f.hand[1] + f.A.b.hand[1]) / 2 - 4]; }
+      return [k.ball[0], sc.ground - k.ball[1]];
+    };
+    function frame(ms) {
+      let t = ms % total, i = 1, acc = 0;
+      while (i < keys.length && acc + keys[i].d < t) { acc += keys[i].d; i++; }
+      let a, b, u;
+      if (i >= keys.length) { a = b = keys[keys.length - 1]; u = 1; }
+      else { a = keys[i - 1]; b = keys[i]; u = (ease[b.e || 'io'])(Math.min(1, (t - acc) / b.d)); }
+      const pose = {};
+      for (const k in a.p) pose[k] = Array.isArray(a.p[k]) ? lerpArr(a.p[k], b.p[k], u) : lerp(a.p[k], b.p[k], u);
+      const f = solve(pose, view, sc.ground, sc.anchor);
+      legB.setAttribute('points', [f.L.b.hip, f.L.b.knee, f.L.b.ankle, f.L.b.toe].map(P).join(' '));
+      heelB.setAttribute('x1', f.L.b.ankle[0]); heelB.setAttribute('y1', f.L.b.ankle[1]); heelB.setAttribute('x2', f.L.b.heel[0]); heelB.setAttribute('y2', f.L.b.heel[1]);
+      armB.setAttribute('points', [f.A.b.sh, f.A.b.elbow, f.A.b.hand].map(P).join(' '));
+      torso.setAttribute('x1', f.hip[0]); torso.setAttribute('y1', f.hip[1]); torso.setAttribute('x2', f.neck[0]); torso.setAttribute('y2', f.neck[1]);
+      head.setAttribute('cx', f.head[0]); head.setAttribute('cy', f.head[1]);
+      legF.setAttribute('points', [f.L.f.hip, f.L.f.knee, f.L.f.ankle, f.L.f.toe].map(P).join(' '));
+      heelF.setAttribute('x1', f.L.f.ankle[0]); heelF.setAttribute('y1', f.L.f.ankle[1]); heelF.setAttribute('x2', f.L.f.heel[0]); heelF.setAttribute('y2', f.L.f.heel[1]);
+      armF.setAttribute('points', [f.A.f.sh, f.A.f.elbow, f.A.f.hand].map(P).join(' '));
+      if (ball) {
+        const pa = ballPos(fullPose(a.p, view), a), pb = ballPos(fullPose(b.p, view), b);
+        if (pa && pb) { const q = lerpArr(pa, pb, u); ball.setAttribute('cx', q[0]); ball.setAttribute('cy', q[1]); ball.style.opacity = 1; }
+        else ball.style.opacity = 0;
+      }
+      let c = ''; for (let j = 0; j < i && j < keys.length; j++) if (keys[j].cap !== undefined) c = keys[j].cap;
+      if (i < keys.length && keys[i].cap !== undefined && u > 0.999) c = keys[i].cap;
+      cap.textContent = c;
+      if (sc.loopFade) { const fade = Math.min(1, t / 200, (total - t) / 200); fg.style.opacity = Math.max(0, fade); if (ball) ball.style.opacity = Math.min(+ball.style.opacity, fade); }
+    }
+    return { frame, total };
+  }
+
+  /* ---------- top-down drill map ---------- */
+  function buildMap(svg, sc) {
+    const bg = el('g', {}, svg); bg.innerHTML = sc.bg || '';
+    const trail = el('polyline', { class: 'm-trail' }, svg);
+    const dot = el('g', {}, svg);
+    el('circle', { r: 7, class: 'm-dot' }, dot);
+    el('path', { d: 'M3,-3.2 L7.5,0 L3,3.2', class: 'm-nose' }, dot);
+    const cueBox = el('g', { class: 'm-cue' }, svg);
+    const cueBg = el('rect', { rx: 8, class: 'm-cuebg' }, cueBox);
+    const cueT = el('text', { 'text-anchor': 'middle', class: 'm-cuetext' }, cueBox);
+    const cap = el('text', { x: 8, y: 16, class: 'a-cap' }, svg);
+    let vi = 0, lastLoop = -1, pts = [], hist = [];
+    const prep = v => {
+      let t = 0; const segs = [];
+      let cur = v.start;
+      v.segs.forEach(s => { segs.push({ from: cur, to: s.to || cur, t0: t, d: s.d, e: s.e || 'io', cap: s.cap }); t += s.d; cur = s.to || cur; });
+      return { segs, total: t + (sc.tail || 500), events: v.events || [] };
+    };
+    const P2 = sc.variants.map(prep);
+    function frame(ms) {
+      const v = P2[vi];
+      const local = ms - (frame.base || 0);
+      if (local >= v.total) {
+        frame.base = ms; vi = sc.random ? Math.floor(Math.random() * P2.length) : (vi + 1) % P2.length; hist = [];
+        return frame(ms);
+      }
+      let pos = v.segs[0].from, ang = 0, capTxt = '';
+      for (const s of v.segs) {
+        if (local >= s.t0) {
+          const u = Math.min(1, (local - s.t0) / s.d);
+          const k = ease[s.e](u);
+          pos = lerpArr(s.from, s.to, k);
+          if (s.to[0] !== s.from[0] || s.to[1] !== s.from[1]) ang = Math.atan2(s.to[1] - s.from[1], s.to[0] - s.from[0]) / R;
+          if (s.cap !== undefined) capTxt = s.cap;
+        }
+      }
+      frame.ang = ang;
+      dot.setAttribute('transform', `translate(${pos[0]},${pos[1]}) rotate(${ang})`);
+      hist.push(pos); if (hist.length > 40) hist.shift();
+      trail.setAttribute('points', hist.map(P).join(' '));
+      cap.textContent = capTxt;
+      let cue = null;
+      v.events.forEach(e => { if (local >= e.t && local < e.t + (e.d || 900)) cue = e; });
+      if (cue) {
+        cueBox.style.opacity = 1; cueT.textContent = cue.text;
+        const cx = cue.x || sc.w / 2, cy = cue.y || 28;
+        cueT.setAttribute('x', cx); cueT.setAttribute('y', cy + 6);
+        const w = Math.max(44, cue.text.length * 10 + 20);
+        cueBg.setAttribute('x', cx - w / 2); cueBg.setAttribute('y', cy - 13); cueBg.setAttribute('width', w); cueBg.setAttribute('height', 26);
+      } else cueBox.style.opacity = 0;
+    }
+    frame.base = 0;
+    return { frame, total: 1e9 };
+  }
+
+  /* ---------- footwork (top-down footprints) ---------- */
+  const FOOT = 'M0,-12 C5,-12 6,-6 5.5,-1 C5,4 4.5,8 3.5,11 C2.5,13 -2.5,13 -3.5,11 C-4.5,8 -5,4 -5,-1 C-5.5,-7 -4,-12 0,-12 Z';
+  function buildFeet(svg, sc) {
+    const bg = el('g', {}, svg); bg.innerHTML = sc.bg || '';
+    const mk = side => { const g = el('g', {}, svg); el('path', { d: FOOT, class: 'f-foot f-' + side, transform: side === 'L' ? 'scale(-1,1)' : '' }, g); return g; };
+    const FL = mk('L'), FR = mk('R');
+    const cap = el('text', { x: 8, y: 16, class: 'a-cap' }, svg);
+    const keys = sc.keys;
+    const total = keys.reduce((s, k, i) => s + (i ? k.d : 0), 0) + (sc.tail || 0);
+    const put = (g, a, b, u, hop) => {
+      if (!a && !b) { g.style.opacity = 0; return; }
+      const A = a || b, B = b || a;
+      const q = lerpArr(A, B, u);
+      const moving = a && b && (a[0] !== b[0] || a[1] !== b[1] || a[2] !== b[2]);
+      const s = moving ? 1 + 0.22 * Math.sin(Math.PI * u) : 1;
+      g.style.opacity = (!a || !b) ? (a ? 1 - u : u) * 0.9 + 0.1 : 1;
+      g.setAttribute('transform', `translate(${q[0]},${q[1]}) rotate(${q[2] || 0}) scale(${s})`);
+    };
+    function frame(ms) {
+      let t = ms % total, i = 1, acc = 0;
+      while (i < keys.length && acc + keys[i].d < t) { acc += keys[i].d; i++; }
+      let a, b, u;
+      if (i >= keys.length) { a = b = keys[keys.length - 1]; u = 1; }
+      else { a = keys[i - 1]; b = keys[i]; u = (ease[b.e || 'io'])(Math.min(1, (t - acc) / b.d)); }
+      put(FL, a.L, b.L, u); put(FR, a.R, b.R, u);
+      let c = ''; for (let j = 0; j < i && j < keys.length; j++) if (keys[j].cap !== undefined) c = keys[j].cap;
+      cap.textContent = c;
+    }
+    return { frame, total };
+  }
+
+  /* ---------- player ---------- */
+  const live = new Set();
+  let raf = 0;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function tick(now) {
+    live.forEach(p => { if (p.playing && p.visible) p.draw(now - p.t0); });
+    raf = live.size ? requestAnimationFrame(tick) : 0;
+  }
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => { const p = e.target.__anim; if (p) p.visible = e.isIntersecting; }), { rootMargin: '80px' }) : null;
+
+  function mount(host, sc) {
+    if (host.__anim) return host.__anim;
+    const svg = el('svg', { viewBox: `0 0 ${sc.w} ${sc.h}`, class: 'anim-svg', role: 'img', 'aria-label': sc.alt || 'Animated demonstration' });
+    host.appendChild(svg);
+    const eng = sc.kind === 'map' ? buildMap(svg, sc) : sc.kind === 'feet' ? buildFeet(svg, sc) : buildFig(svg, sc);
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'anim-btn';
+    host.appendChild(btn);
+    const p = { draw: eng.frame, t0: performance.now(), playing: !reduce, visible: true, pausedAt: 0 };
+    const label = () => { btn.textContent = p.playing ? 'Pause' : 'Play'; btn.setAttribute('aria-label', p.playing ? 'Pause demo' : 'Play demo'); };
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      if (p.playing) { p.pausedAt = performance.now() - p.t0; p.playing = false; }
+      else { p.t0 = performance.now() - p.pausedAt; p.playing = true; if (!raf) raf = requestAnimationFrame(tick); }
+      label();
+    });
+    label();
+    eng.frame(sc.still || 0);
+    host.__anim = p; live.add(p);
+    if (io) io.observe(host);
+    if (!raf) raf = requestAnimationFrame(tick);
+    return p;
+  }
+  function renderAt(host, sc, ms) { // for testing
+    const svg = el('svg', { viewBox: `0 0 ${sc.w} ${sc.h}`, class: 'anim-svg' }); host.appendChild(svg);
+    const eng = sc.kind === 'map' ? buildMap(svg, sc) : sc.kind === 'feet' ? buildFeet(svg, sc) : buildFig(svg, sc);
+    eng.frame(ms); return eng;
+  }
+  return { mount, renderAt };
+})();
+
+/* ---------- Demo scenes (side view faces right; angles in degrees) ---------- */
+const SCENES = (() => {
+  const G = 148;
+  const S = (o) => Object.assign({ kind: 'fig', w: 240, h: 162, ground: G }, o);
+  const stand = { t: 0, lf: [2, 0, 90], lb: [-2, 0, 90], af: [6, 14], ab: [-6, 8] };
+  const athletic = { t: 22, lf: [38, -12, 90], lb: [34, -14, 90], af: [25, 60], ab: [18, 55] };
+  // run cycle: support leg under the hip, then push-off with the other knee driving
+  const stanceF = (x, t) => ({ x, t, lf: [4 - t * 0.3, -10 - t * 0.3, 84], lb: [44 + t * 0.2, -64, 70], af: [10, 60], ab: [-10, 30] });
+  const flightF = (x, t, air) => ({ x, t, air, lf: [-30, -46, 30], lb: [70 - t * 0.1, -6, 100], af: [-46, -12], ab: [58, 128] });
+  const swap = p => Object.assign({}, p, { lf: p.lb, lb: p.lf, af: p.ab, ab: p.af });
+  const runKeys = (x0, x1, steps, lean0, lean1, d0, d1, air) => {
+    const k = []; const n = steps * 2;
+    for (let i = 0; i <= n; i++) {
+      const u = i / n, x = x0 + (x1 - x0) * u, t = lean0 + (lean1 - lean0) * u, d = Math.round(d0 + (d1 - d0) * u);
+      const base = i % 2 === 0 ? stanceF(x, t) : flightF(x, t, air);
+      k.push({ d: i ? d : 0, p: (Math.floor(i / 2) % 2) ? swap(base) : base });
+    }
+    return k;
+  };
+  const runA = (x, t) => stanceF(x, t);
+  const runB = (x, t) => swap(stanceF(x, t));
+  const mirror = (p) => Object.assign({}, p, { lf: p.lb, lb: p.lf, af: p.ab, ab: p.af });
+
+  /* top-down helpers */
+  const cone = (x, y, c = '') => `<path d="M${x - 6},${y + 5} L${x},${y - 7} L${x + 6},${y + 5} Z" class="m-cone ${c}"/>`;
+  const dotM = (x, y) => `<circle cx="${x}" cy="${y}" r="3.5" class="m-marker"/>`;
+  const line = (x1, y1, x2, y2, c = 'm-line') => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${c}"/>`;
+  const txt = (x, y, s, a = 'middle', c = 'm-label') => `<text x="${x}" y="${y}" text-anchor="${a}" class="${c}">${s}</text>`;
+  const zone = (x, y, w, h, c = 'm-zone') => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4" class="${c}"/>`;
+
+  const sc = {};
+
+  sc.pogo = S({ alt: 'Pogo hops: small, stiff bounces on the balls of the feet', keys: [
+    { p: { t: 2, lf: [2, 0, 58], lb: [-2, 0, 58], af: [8, 30], ab: [-8, 20] }, cap: 'Stiff ankles · heels stay up' },
+    { d: 170, e: 'out', p: { air: 11, t: 2, lf: [1, 0, 38], lb: [-1, 0, 38], af: [12, 34], ab: [-4, 24] } },
+    { d: 170, e: 'in', p: { t: 2, lf: [2, 0, 58], lb: [-2, 0, 58], af: [8, 30], ab: [-8, 20] } },
+    { d: 90, p: { t: 2, lf: [3, -1, 66], lb: [-1, -1, 66], af: [8, 30], ab: [-8, 20] } },
+  ] });
+
+  sc.reacthop = S({ alt: 'Low reactive hops: quick bounces with short ground contact', keys: [
+    { p: { t: 3, lf: [4, -2, 64], lb: [0, -3, 64], af: [-20, 10], ab: [-28, 0] }, cap: 'Hit and go · ground is hot' },
+    { d: 210, e: 'out', p: { air: 20, t: 0, lf: [2, 0, 36], lb: [-2, 0, 36], af: [55, 80], ab: [45, 70] } },
+    { d: 210, e: 'in', p: { t: 3, lf: [4, -2, 60], lb: [0, -3, 60], af: [10, 30], ab: [0, 20] } },
+    { d: 90, p: { t: 4, lf: [8, -4, 70], lb: [4, -5, 70], af: [-20, 10], ab: [-28, 0] } },
+  ] });
+
+  sc.dropjump = S({ alt: 'Drop jump: step off a low step, land and bounce up immediately', loopFade: true, tail: 300,
+    props: [{ type: 'box', x: 56, w: 44, h: 24 }, { type: 'text', x: 78, y: G + 13, text: '12–18 in' }],
+    keys: [
+      { p: Object.assign({ x: 76, g: 24 }, stand), cap: 'Step off. Don’t jump off.' },
+      { d: 600, p: { x: 90, g: 24, t: 4, lf: [32, 16, 96], lb: [-2, 0, 90], af: [-10, 0], ab: [-14, -2] } },
+      { d: 300, e: 'in', p: { x: 124, g: 0, air: 0, t: 12, lf: [18, 0, 64], lb: [14, -2, 64], af: [-30, -14], ab: [-36, -18] }, cap: 'Land and leave fast' },
+      { d: 110, e: 'lin', p: { x: 125, g: 0, t: 18, lf: [30, -10, 86], lb: [26, -12, 86], af: [-52, -28], ab: [-58, -34] } },
+      { d: 300, e: 'out', p: { x: 128, air: 36, t: 0, lf: [2, -4, 42], lb: [-2, -6, 42], af: [172, 176], ab: [165, 170] }, cap: 'Up!' },
+      { d: 300, e: 'in', p: { x: 130, air: 0, t: 24, lf: [42, -16, 90], lb: [38, -18, 90], af: [45, 70], ab: [38, 64] }, cap: 'Land like a cat' },
+      { d: 700, p: { x: 130, t: 22, lf: [40, -15, 90], lb: [36, -17, 90], af: [40, 66], ab: [34, 60] } },
+    ] });
+
+  sc.broad = S({ alt: 'Broad jump: swing, jump forward, stick the landing', loopFade: true, tail: 250,
+    props: [{ type: 'mark', x: 44, label: 'start' }],
+    keys: [
+      { p: Object.assign({ x: 40 }, stand), cap: 'Swing back' },
+      { d: 450, p: { x: 34, t: 42, lf: [58, -18, 90], lb: [54, -20, 90], af: [-60, -50], ab: [-66, -56] } },
+      { d: 240, e: 'in', p: { x: 58, t: 38, lf: [-12, -20, 28], lb: [-16, -22, 28], af: [150, 160], ab: [144, 154] }, cap: 'Throw the hands' },
+      { d: 300, e: 'out', p: { x: 112, air: 26, t: 30, lf: [72, 18, 100], lb: [66, 14, 100], af: [110, 120], ab: [104, 114] } },
+      { d: 300, e: 'in', p: { x: 166, air: 0, t: 36, lf: [60, -22, 90], lb: [56, -24, 90], af: [62, 86], ab: [56, 80] }, cap: 'Stick it · hold 2 s' },
+      { d: 900, p: { x: 166, t: 34, lf: [58, -20, 90], lb: [54, -22, 90], af: [58, 82], ab: [52, 76] } },
+    ] });
+
+  sc.slhop = S({ alt: 'Single-leg hop for height, landing on the same leg and holding', keys: [
+    { p: { t: 4, lf: [2, 0, 90], lb: [38, -50, 60], af: [6, 14], ab: [-6, 8] }, cap: 'One leg' },
+    { d: 420, p: { t: 24, lf: [40, -14, 90], lb: [40, -40, 70], af: [-50, -30], ab: [-56, -36] }, cap: 'Load' },
+    { d: 300, e: 'out', p: { air: 30, t: 2, lf: [0, -4, 40], lb: [82, 6, 100], af: [165, 172], ab: [150, 160] }, cap: 'Drive the free knee up' },
+    { d: 300, e: 'in', p: { t: 26, lf: [42, -16, 90], lb: [42, -36, 70], af: [40, 60], ab: [30, 50] }, cap: 'Stick it · hold 2 s' },
+    { d: 1000, p: { t: 24, lf: [40, -15, 90], lb: [40, -38, 70], af: [36, 56], ab: [26, 46] } },
+    { d: 400, p: { t: 4, lf: [2, 0, 90], lb: [38, -50, 60], af: [6, 14], ab: [-6, 8] } },
+  ] });
+
+  /* front view: +x is the athlete's left side as you look at them; legs 'f' sit on +x */
+  sc.skater = S({ view: 'front', alt: 'Skater bound: jump sideways from one leg to the other and stick it', keys: [
+    { p: { x: 70, t: -8, lb: [6, -2, -90], lf: [-14, -40, 90], af: [-40, -60], ab: [30, 10] }, cap: 'Load the outside leg' },
+    { d: 300, p: { x: 72, t: -14, lb: [10, -4, -90], lf: [-20, -48, 90], af: [-60, -80], ab: [40, 20] } },
+    { d: 280, e: 'out', p: { x: 122, air: 16, t: 4, lb: [-28, -30, -90], lf: [24, 20, 90], af: [60, 80], ab: [-40, -60] }, cap: 'Push sideways' },
+    { d: 280, e: 'in', p: { x: 170, air: 0, t: 10, lf: [-6, 2, 90], lb: [14, 40, -90], af: [40, 20], ab: [-40, -60] }, cap: 'Stick it · hold 2 s' },
+    { d: 900, p: { x: 170, t: 12, lf: [-8, 2, 90], lb: [14, 40, -90], af: [36, 18], ab: [-36, -56] } },
+    { d: 280, e: 'out', p: { x: 120, air: 16, t: -4, lb: [-24, -20, -90], lf: [28, 30, 90], af: [40, 60], ab: [-60, -80] }, cap: 'And back' },
+    { d: 280, e: 'in', p: { x: 70, air: 0, t: -10, lb: [6, -2, -90], lf: [-14, -40, 90], af: [-40, -60], ab: [30, 10] }, cap: 'Stick it · hold 2 s' },
+    { d: 900, p: { x: 70, t: -8, lb: [6, -2, -90], lf: [-14, -40, 90], af: [-40, -60], ab: [30, 10] } },
+  ] });
+
+  sc.accel = S({ alt: 'Acceleration: forward lean, big pushes behind you', loopFade: true, tail: 200,
+    props: [{ type: 'mark', x: 26, label: '0' }, { type: 'mark', x: 226, label: '15 yd' }],
+    keys: (() => { const k = runKeys(30, 222, 4, 46, 22, 230, 150, 2); k[0].cap = 'Low lean · push the ground behind you'; return k; })() });
+
+  sc.sprint = S({ alt: 'Upright running: tall posture, feet land under the hips', loopFade: true, tail: 150,
+    keys: (() => { const k = runKeys(22, 226, 4, 8, 8, 150, 150, 6); k[0].cap = 'Tall · quiet feet · loose face'; return k; })() });
+
+  sc.bound = S({ alt: 'Bounds: long, springy strides that float through the air', loopFade: true, tail: 200,
+    keys: [
+      { p: { x: 20, t: 12, lf: [-30, -40, 30], lb: [70, 20, 100], af: [70, 120], ab: [-50, -20] }, cap: 'Push long and float' },
+      { d: 380, e: 'out', p: { x: 70, air: 22, t: 10, lf: [-40, -60, 20], lb: [80, 30, 100], af: [80, 130], ab: [-60, -30] } },
+      { d: 300, e: 'in', p: { x: 106, t: 14, lf: [-2, -6, 80], lb: [40, -30, 90], af: [20, 60], ab: [-20, 0] } },
+      { d: 160, p: { x: 120, t: 12, lf: [-30, -40, 30], lb: [70, 20, 100], af: [-50, -20], ab: [70, 120] } },
+      { d: 380, e: 'out', p: { x: 168, air: 22, t: 10, lb: [-40, -60, 20], lf: [80, 30, 100], ab: [80, 130], af: [-60, -30] } },
+      { d: 300, e: 'in', p: { x: 206, t: 14, lb: [-2, -6, 80], lf: [40, -30, 90], ab: [20, 60], af: [-20, 0] } },
+    ] });
+
+  sc.askip = S({ alt: 'A-skip: rhythmic skip, knee up, foot strikes down under the hip', loopFade: true, tail: 150,
+    keys: [
+      { p: { x: 40, t: 4, lf: [88, 2, 104], lb: [0, 0, 64], af: [-40, -10], ab: [50, 110] }, cap: 'Knee up · toes up' },
+      { d: 260, p: { x: 62, t: 4, air: 5, lf: [10, 0, 80], lb: [20, -10, 90], af: [0, 40], ab: [0, 30] } },
+      { d: 160, p: { x: 74, t: 4, lb: [88, 2, 104], lf: [0, 0, 64], ab: [-40, -10], af: [50, 110] }, cap: 'Strike down and back' },
+      { d: 260, p: { x: 96, t: 4, air: 5, lb: [10, 0, 80], lf: [20, -10, 90], af: [0, 30], ab: [0, 40] } },
+      { d: 160, p: { x: 108, t: 4, lf: [88, 2, 104], lb: [0, 0, 64], af: [-40, -10], ab: [50, 110] } },
+      { d: 260, p: { x: 130, t: 4, air: 5, lf: [10, 0, 80], lb: [20, -10, 90], af: [0, 40], ab: [0, 30] } },
+      { d: 160, p: { x: 142, t: 4, lb: [88, 2, 104], lf: [0, 0, 64], ab: [-40, -10], af: [50, 110] } },
+      { d: 260, p: { x: 164, t: 4, air: 5, lb: [10, 0, 80], lf: [20, -10, 90], af: [0, 30], ab: [0, 40] } },
+      { d: 160, p: { x: 176, t: 4, lf: [88, 2, 104], lb: [0, 0, 64], af: [-40, -10], ab: [50, 110] } },
+    ] });
+
+  sc.skip = S({ alt: 'Skip for height: big arm drive, float up', loopFade: true, tail: 150,
+    keys: [
+      { p: { x: 30, t: 6, lf: [-10, -20, 50], lb: [30, -30, 80], af: [-50, -20], ab: [40, 90] }, cap: 'Drive arms + knee up' },
+      { d: 330, e: 'out', p: { x: 70, air: 26, t: 0, lf: [-6, -10, 40], lb: [92, 0, 104], af: [-40, -10], ab: [170, 176] } },
+      { d: 330, e: 'in', p: { x: 104, t: 6, lf: [30, -30, 80], lb: [-10, -20, 50], af: [40, 90], ab: [-50, -20] } },
+      { d: 330, e: 'out', p: { x: 144, air: 26, t: 0, lb: [-6, -10, 40], lf: [92, 0, 104], ab: [-40, -10], af: [170, 176] } },
+      { d: 330, e: 'in', p: { x: 178, t: 6, lb: [30, -30, 80], lf: [-10, -20, 50], ab: [40, 90], af: [-50, -20] } },
+    ] });
+
+  sc.march = S({ alt: 'Marching: tall posture, knee up, opposite arm', keys: [
+    { p: { x: 120, t: 2, lf: [86, 0, 100], lb: [0, 0, 70], af: [-40, -10], ab: [50, 110] }, cap: 'Tall · knee to hip height' },
+    { d: 500, p: { x: 120, t: 2, lf: [2, 0, 90], lb: [-2, 0, 90], af: [4, 14], ab: [-4, 10] } },
+    { d: 500, p: { x: 120, t: 2, lb: [86, 0, 100], lf: [0, 0, 70], ab: [-40, -10], af: [50, 110] } },
+    { d: 500, p: { x: 120, t: 2, lf: [2, 0, 90], lb: [-2, 0, 90], af: [4, 14], ab: [-4, 10] } },
+  ] });
+
+  sc.ankledribble = S({ alt: 'Ankle dribbles: tiny quick steps, feet barely leave the ground', loopFade: true, tail: 120,
+    keys: (() => { const k = [{ p: { x: 50, t: 8, lf: [6, 0, 66], lb: [-2, -8, 52], af: [-30, -5], ab: [30, 80] }, cap: 'Tiny, fast, quiet' }];
+      for (let i = 1; i <= 12; i++) { const a = i % 2; k.push({ d: 150, p: { x: 50 + i * 11, t: 8, lf: a ? [-2, -8, 52] : [6, 0, 66], lb: a ? [6, 0, 66] : [-2, -8, 52], af: a ? [30, 80] : [-30, -5], ab: a ? [-30, -5] : [30, 80] } }); }
+      return k; })() });
+
+  sc.legswing = S({ alt: 'Leg swings: hold a wall, swing one leg forward and back', props: [{ type: 'wall', x: 186 }], keys: [
+    { p: { x: 150, t: 0, lb: [0, 0, 90], lf: [-30, -40, 60], af: [70, 76], ab: [-6, 8] }, cap: 'Loose, growing swings' },
+    { d: 520, p: { x: 150, t: -4, lb: [0, 0, 90], lf: [62, 50, 110], af: [70, 76], ab: [-6, 8] } },
+    { d: 520, p: { x: 150, t: 4, lb: [0, 0, 90], lf: [-34, -44, 60], af: [70, 76], ab: [-6, 8] } },
+  ] });
+
+  sc.wgs = S({ alt: 'World’s greatest stretch: lunge, elbow to instep, reach to the sky', keys: [
+    { p: Object.assign({ x: 120 }, stand), cap: 'Step into a long lunge' },
+    { d: 600, p: { x: 120, t: 50, lf: [82, -4, 90], lb: [-44, -66, 10], af: [8, 4], ab: [0, -4] } },
+    { d: 500, p: { x: 120, t: 70, lf: [84, -6, 90], lb: [-46, -68, 10], af: [24, 70], ab: [4, -2] }, cap: 'Elbow to instep' },
+    { d: 700, p: { x: 120, t: 46, lf: [82, -4, 90], lb: [-44, -66, 10], af: [176, 180], ab: [6, -2] }, cap: 'Rotate · reach to the sky' },
+    { d: 700, p: { x: 120, t: 46, lf: [82, -4, 90], lb: [-44, -66, 10], af: [176, 180], ab: [6, -2] } },
+    { d: 600, p: { x: 120, t: 50, lf: [82, -4, 90], lb: [-44, -66, 10], af: [8, 4], ab: [0, -4] } },
+    { d: 600, p: Object.assign({ x: 120 }, stand) },
+  ] });
+
+  sc.slrdl = S({ alt: 'Single-leg RDL reach: hinge on one leg, reach forward, back leg long', keys: [
+    { p: { x: 110, t: 2, lf: [2, 0, 90], lb: [-6, -6, 80], af: [6, 14], ab: [-6, 8] }, cap: 'Stand on one leg' },
+    { d: 900, p: { x: 110, t: 78, lf: [10, -6, 90], lb: [-80, -82, 0], af: [30, 36], ab: [24, 30] }, cap: 'Hinge · reach long' },
+    { d: 500, p: { x: 110, t: 80, lf: [10, -6, 90], lb: [-82, -84, 0], af: [36, 40], ab: [30, 34] } },
+    { d: 900, p: { x: 110, t: 2, lf: [2, 0, 90], lb: [-6, -6, 80], af: [6, 14], ab: [-6, 8] } },
+  ] });
+
+  sc.latlunge = S({ view: 'front', alt: 'Lateral lunge: step wide, sit into one hip, other leg straight', keys: [
+    { p: { x: 120, t: 0, lf: [4, 0], lb: [-4, 0], af: [10, 6], ab: [-10, -6] }, cap: 'Step wide' },
+    { d: 600, p: { x: 138, t: 6, lf: [52, -6], lb: [-40, -40], af: [14, 8], ab: [-14, -8] }, cap: 'Sit into the hip' },
+    { d: 500, p: { x: 138, t: 6, lf: [52, -6], lb: [-40, -40], af: [14, 8], ab: [-14, -8] } },
+    { d: 600, p: { x: 120, t: 0, lf: [4, 0], lb: [-4, 0], af: [10, 6], ab: [-10, -6] } },
+    { d: 600, p: { x: 102, t: -6, lb: [-52, 6], lf: [40, 40], af: [14, 8], ab: [-14, -8] }, cap: 'Other side' },
+    { d: 500, p: { x: 102, t: -6, lb: [-52, 6], lf: [40, 40], af: [14, 8], ab: [-14, -8] } },
+    { d: 600, p: { x: 120, t: 0, lf: [4, 0], lb: [-4, 0], af: [10, 6], ab: [-10, -6] } },
+  ] });
+
+  const nordicArms = th => [th + 30, th + 150];
+  sc.nordic = S({ alt: 'Nordic hamstring curl: kneel with feet anchored, lower slowly, catch with hands',
+    props: [{ type: 'raw', svg: `<rect x="14" y="${G - 36}" width="84" height="20" rx="5" class="a-prop"/><rect x="14" y="${G - 50}" width="14" height="34" rx="4" class="a-prop"/><rect x="18" y="${G - 16}" width="5" height="16" class="a-prop"/><rect x="88" y="${G - 16}" width="5" height="16" class="a-prop"/>` }],
+    anchor: ['kneeF', 'kneeB'],
+    keys: [
+      { p: { x: 112, t: 0, lf: [0, -90, -150], lb: [0, -90, -150], af: nordicArms(0), ab: nordicArms(0) }, cap: 'Feet hooked · hips forward' },
+      { d: 3200, e: 'lin', p: { x: 112, t: 58, lf: [-58, -90, -150], lb: [-58, -90, -150], af: nordicArms(58), ab: nordicArms(58) }, cap: 'Lower slowly · fight it' },
+      { d: 500, e: 'in', p: { x: 112, t: 76, lf: [-76, -90, -150], lb: [-76, -90, -150], af: [62, 72], ab: [58, 68] }, cap: 'Catch with your hands' },
+      { d: 400, p: { x: 112, t: 76, lf: [-76, -90, -150], lb: [-76, -90, -150], af: [62, 72], ab: [58, 68] } },
+      { d: 700, p: { x: 112, t: 0, lf: [0, -90, -150], lb: [0, -90, -150], af: nordicArms(0), ab: nordicArms(0) }, cap: 'Push back up · reset' },
+      { d: 600, p: { x: 112, t: 0, lf: [0, -90, -150], lb: [0, -90, -150], af: nordicArms(0), ab: nordicArms(0) } },
+    ] });
+
+  sc.copenhagen = S({ alt: 'Copenhagen plank: side plank with top leg on a couch, lift hips into a straight line',
+    props: [{ type: 'couch', x: 150, w: 86, h: 31, back: 'right' }],
+    anchor: ['elbowF'],
+    keys: [
+      { p: { x: 104, t: -92, lf: [118, 118, 200], lb: [70, 50, 160], af: [0, -90], ab: [-40, -100] }, cap: 'Top leg on couch' },
+      { d: 900, p: { x: 104, t: -108, lf: [106, 106, 196], lb: [100, 100, 190], af: [0, -90], ab: [-60, -120] }, cap: 'Lift · straight line · hold' },
+      { d: 1800, p: { x: 104, t: -108, lf: [106, 106, 196], lb: [100, 100, 190], af: [0, -90], ab: [-60, -120] } },
+      { d: 900, p: { x: 104, t: -92, lf: [118, 118, 200], lb: [70, 50, 160], af: [0, -90], ab: [-40, -100] }, cap: 'Lower with control' },
+      { d: 500, p: { x: 104, t: -92, lf: [118, 118, 200], lb: [70, 50, 160], af: [0, -90], ab: [-40, -100] } },
+    ] });
+
+  sc.calfraise = S({ alt: 'Single-leg calf raise on a step edge: slow up, slow down past level', anchor: ['toeF'],
+    props: [{ type: 'box', x: 96, w: 40, h: 14 }, { type: 'wall', x: 190 }],
+    keys: [
+      { p: { x: 128, g: 14, t: 2, lf: [0, 0, 112], lb: [16, -60, 50], af: [60, 70], ab: [-6, 8] }, cap: 'Heel below the step' },
+      { d: 1300, p: { x: 128, g: 14, t: 2, lf: [0, 0, 40], lb: [16, -60, 50], af: [58, 68], ab: [-6, 8] }, cap: 'Up 2 s · pause on top' },
+      { d: 500, p: { x: 128, g: 14, t: 2, lf: [0, 0, 40], lb: [16, -60, 50], af: [58, 68], ab: [-6, 8] } },
+      { d: 1600, p: { x: 128, g: 14, t: 2, lf: [0, 0, 112], lb: [16, -60, 50], af: [60, 70], ab: [-6, 8] }, cap: 'Down 3 s' },
+      { d: 500, p: { x: 128, g: 14, t: 10, lf: [24, -14, 112], lb: [30, -50, 50], af: [60, 70], ab: [-6, 8] }, cap: 'Now bent knee' },
+      { d: 1300, p: { x: 128, g: 14, t: 10, lf: [24, -14, 46], lb: [30, -50, 50], af: [58, 68], ab: [-6, 8] } },
+      { d: 500, p: { x: 128, g: 14, t: 10, lf: [24, -14, 46], lb: [30, -50, 50], af: [58, 68], ab: [-6, 8] } },
+      { d: 1600, p: { x: 128, g: 14, t: 10, lf: [24, -14, 112], lb: [30, -50, 50], af: [60, 70], ab: [-6, 8] } },
+      { d: 500, p: { x: 128, g: 14, t: 2, lf: [0, 0, 112], lb: [16, -60, 50], af: [60, 70], ab: [-6, 8] } },
+    ] });
+
+  sc.tibraise = S({ alt: 'Tibialis raise: back on a wall, heels out, pull toes up toward shins', anchor: ['heelF', 'heelB'],
+    props: [{ type: 'wall', x: 60 }],
+    keys: [
+      { p: { x: 84, t: -4, lf: [14, 14, 90], lb: [12, 12, 90], af: [-4, 4], ab: [-8, 0] }, cap: 'Heels out, back on wall' },
+      { d: 500, p: { x: 84, t: -4, lf: [14, 14, 140], lb: [12, 12, 140], af: [-4, 4], ab: [-8, 0] }, cap: 'Toes up hard' },
+      { d: 300, p: { x: 84, t: -4, lf: [14, 14, 140], lb: [12, 12, 140], af: [-4, 4], ab: [-8, 0] } },
+      { d: 500, p: { x: 84, t: -4, lf: [14, 14, 90], lb: [12, 12, 90], af: [-4, 4], ab: [-8, 0] }, cap: 'Tap down, repeat' },
+    ] });
+
+  sc.splitiso = S({ alt: 'Split-squat isometric: hold the bottom of a split squat', keys: [
+    { p: { x: 116, t: 2, lf: [24, 0, 90], lb: [-20, -26, 30], af: [6, 14], ab: [-6, 8] }, cap: 'Long split stance' },
+    { d: 900, p: { x: 116, t: 6, lf: [82, -4, 90], lb: [-10, -84, 12], af: [10, 18], ab: [-2, 10] }, cap: 'Sink · back knee hovers' },
+    { d: 1400, p: { x: 116, t: 6, lf: [82, -4, 90], lb: [-10, -84, 12], af: [10, 18], ab: [-2, 10] }, cap: 'Hold 30 s · breathe' },
+    { d: 900, p: { x: 116, t: 2, lf: [24, 0, 90], lb: [-20, -26, 30], af: [6, 14], ab: [-6, 8] } },
+  ] });
+
+  sc.rfess = S({ alt: 'Rear-foot-elevated split squat: back foot on a bench, sink straight down', anchor: ['toeF', 'heelF'],
+    props: [{ type: 'bench', x: 34, w: 62, h: 34 }],
+    keys: [
+      { p: { x: 112, t: 6, lf: [22, -2, 90], lb: [-36, -96, -100], af: [6, 10], ab: [-6, 4] }, cap: 'Back foot laces-down' },
+      { d: 1100, p: { x: 108, t: 14, lf: [78, -10, 90], lb: [-6, -108, -100], af: [14, 18], ab: [4, 8] }, cap: 'Sink down 2 s' },
+      { d: 400, p: { x: 108, t: 14, lf: [78, -10, 90], lb: [-6, -108, -100], af: [14, 18], ab: [4, 8] } },
+      { d: 700, p: { x: 112, t: 6, lf: [22, -2, 90], lb: [-36, -96, -100], af: [6, 10], ab: [-6, 4] }, cap: 'Drive up' },
+    ] });
+
+  sc.rdl = S({ ballClass: 'a-plate', alt: 'Romanian deadlift: hips back, bar slides down the thighs, flat back', ball: true, ballR: 11,
+    keys: [
+      { p: { x: 120, t: 0, lf: [4, 0, 90], lb: [2, 0, 90], af: [6, 4], ab: [4, 2] }, ball: 'hands', cap: 'Soft knees' },
+      { d: 1500, p: { x: 110, t: 72, lf: [16, -6, 90], lb: [14, -8, 90], af: [-4, -6], ab: [-6, -8] }, ball: 'hands', cap: 'Hips back · feel hamstrings' },
+      { d: 300, p: { x: 110, t: 72, lf: [16, -6, 90], lb: [14, -8, 90], af: [-4, -6], ab: [-6, -8] }, ball: 'hands' },
+      { d: 1000, p: { x: 120, t: 0, lf: [4, 0, 90], lb: [2, 0, 90], af: [6, 4], ab: [4, 2] }, ball: 'hands', cap: 'Squeeze glutes to stand' },
+      { d: 400, p: { x: 120, t: 0, lf: [4, 0, 90], lb: [2, 0, 90], af: [6, 4], ab: [4, 2] }, ball: 'hands' },
+    ] });
+
+  sc.slstance = S({ alt: 'Single-leg stance with wall-ball catches', ball: true, props: [{ type: 'wall', x: 212 }],
+    keys: [
+      { p: { x: 120, t: 6, lf: [10, -6, 90], lb: [30, -50, 60], af: [60, 90], ab: [56, 86] }, ball: 'hands', cap: 'One leg · soft knee' },
+      { d: 350, e: 'out', p: { x: 120, t: 4, lf: [10, -6, 90], lb: [30, -50, 60], af: [86, 96], ab: [82, 92] }, ball: [210, 62] },
+      { d: 420, e: 'in', p: { x: 120, t: 8, lf: [14, -8, 90], lb: [32, -48, 60], af: [60, 90], ab: [56, 86] }, ball: 'hands', cap: 'Catch · stay still' },
+      { d: 600, p: { x: 120, t: 6, lf: [10, -6, 90], lb: [30, -50, 60], af: [60, 90], ab: [56, 86] }, ball: 'hands' },
+    ] });
+
+  sc.fallrecover = S({ alt: 'Fall and recover: lean like a plank until you must step, catch in an athletic stance', keys: [
+    { p: { x: 100, t: 0, lf: [0, 0, 90], lb: [0, 0, 90], af: [4, 10], ab: [-4, 6] }, cap: 'Stiff as a board' },
+    { d: 1100, e: 'in', p: { x: 104, t: 20, lf: [-20, -20, 90], lb: [-20, -20, 90], af: [20, 40], ab: [10, 30] }, cap: 'Lean… lean…' },
+    { d: 260, e: 'out', p: { x: 132, t: 22, lf: [40, -14, 90], lb: [-26, -40, 40], af: [40, 70], ab: [-20, 10] }, cap: 'Catch in one step' },
+    { d: 900, p: { x: 132, t: 22, lf: [40, -14, 90], lb: [-26, -40, 40], af: [40, 70], ab: [-20, 10] } },
+    { d: 600, p: { x: 100, t: 0, lf: [0, 0, 90], lb: [0, 0, 90], af: [4, 10], ab: [-4, 6] } },
+  ] });
+
+  sc.decel = S({ alt: 'Deceleration: sprint in, stop in three short steps, hold the stance', loopFade: true, tail: 200,
+    props: [{ type: 'mark', x: 160, label: 'stop zone' }],
+    keys: [
+      { p: runA(10, 18), cap: 'Accelerate' },
+      { d: 200, p: runB(46, 18) },
+      { d: 200, p: runA(84, 16) },
+      { d: 200, p: runB(120, 12) },
+      { d: 170, p: { x: 142, t: 0, lf: [40, 10, 100], lb: [-20, -40, 40], af: [40, 80], ab: [-30, 0] }, cap: '1 · 2 · 3' },
+      { d: 160, p: { x: 156, t: 4, lb: [36, 0, 100], lf: [0, -30, 70], af: [-10, 20], ab: [30, 70] } },
+      { d: 160, p: { x: 166, t: 14, lf: [44, -10, 90], lb: [10, -30, 80], af: [30, 70], ab: [20, 60] } },
+      { d: 160, p: Object.assign({ x: 170 }, athletic), cap: 'Hold 2 s · balanced' },
+      { d: 900, p: Object.assign({ x: 170 }, athletic) },
+    ] });
+
+  sc.approach2 = S({ h: 178, ground: 164, alt: 'Two-foot approach jump: quick steps, long penultimate step, plant both feet, explode up', loopFade: true, tail: 300,
+    props: [{ type: 'target', x: 176, y: 16 }],
+    keys: [
+      { p: runA(10, 14), cap: 'Build speed' },
+      { d: 220, p: runB(44, 14) },
+      { d: 220, p: runA(80, 14) },
+      { d: 260, p: { x: 118, t: 6, lf: [-24, -60, 30], lb: [56, -8, 96], af: [40, 90], ab: [-30, 0] }, cap: 'Long, low step' },
+      { d: 200, p: { x: 146, t: 18, lf: [40, -18, 90], lb: [34, -22, 90], af: [-70, -50], ab: [-74, -54] }, cap: 'Plant both feet · arms back' },
+      { d: 330, e: 'out', p: { x: 164, air: 40, t: -6, lf: [-6, -10, 36], lb: [-10, -14, 36], af: [176, 180], ab: [150, 160] }, cap: 'Jump through the target' },
+      { d: 330, e: 'in', p: { x: 178, air: 0, t: 22, lf: [40, -14, 90], lb: [36, -16, 90], af: [40, 60], ab: [34, 56] }, cap: 'Land soft' },
+      { d: 500, p: { x: 178, t: 20, lf: [38, -13, 90], lb: [34, -15, 90], af: [36, 56], ab: [30, 50] } },
+    ] });
+
+  sc.approach1 = S({ h: 178, ground: 164, alt: 'One-foot approach jump: fast approach, plant one foot, drive the other knee up', loopFade: true, tail: 300,
+    props: [{ type: 'target', x: 178, y: 14 }],
+    keys: [
+      { p: runA(10, 12), cap: 'Fast, relaxed approach' },
+      { d: 200, p: runB(46, 12) },
+      { d: 200, p: runA(84, 12) },
+      { d: 200, p: runB(120, 8) },
+      { d: 190, p: { x: 152, t: -4, lf: [24, 6, 96], lb: [-30, -64, 20], af: [-30, 0], ab: [30, 60] }, cap: 'Plant · heel-to-toe' },
+      { d: 170, p: { x: 158, t: 4, lf: [18, -14, 86], lb: [50, -20, 96], af: [-50, -20], ab: [10, 40] } },
+      { d: 320, e: 'out', p: { x: 170, air: 40, t: 0, lf: [-4, -8, 36], lb: [88, 6, 104], af: [176, 180], ab: [120, 140] }, cap: 'Knee up · reach' },
+      { d: 330, e: 'in', p: { x: 182, air: 0, t: 22, lf: [40, -14, 90], lb: [36, -16, 90], af: [40, 60], ab: [34, 56] }, cap: 'Land soft' },
+      { d: 500, p: { x: 182, t: 20, lf: [38, -13, 90], lb: [34, -15, 90], af: [36, 56], ab: [30, 50] } },
+    ] });
+
+  /* ---------- top-down maps (320 x 160) ---------- */
+  const M = (o) => Object.assign({ kind: 'map', w: 320, h: 160 }, o);
+
+  // rhythm runs: 10 px per yard. 10-yd build, 6 markers ~5.5 ft (≈18 px) apart
+  {
+    const x0 = 24, mk = [0, 1, 2, 3, 4, 5].map(i => 124 + i * 18.3);
+    const bg = zone(x0, 66, 100, 28) + txt(74, 112, 'build 10 yd') + mk.map(x => dotM(x, 80)).join('') + txt(170, 112, '6 markers · 5½ ft apart') + line(x0, 60, x0, 100, 'm-line m-strong');
+    sc.rhythm = M({ alt: 'Rhythm runs: build up for 10 yards, then run through six evenly spaced markers', bg, variants: [{
+      start: [x0, 80], segs: [{ to: [124, 80], d: 1500, e: 'in', cap: 'Build to 85%' }, { to: [232, 80], d: 760, e: 'lin', cap: 'Land just past each marker' }, { to: [290, 80], d: 600, e: 'out', cap: 'Ease off' }] }] });
+  }
+
+  // cuts
+  {
+    const bg = cone(150, 80) + txt(150, 104, 'plant') + line(30, 80, 150, 80, 'm-line m-faint');
+    const mk = (name, to, cueTxt) => ({ start: [30, 80], segs: [{ to: [138, 80], d: 1100, e: 'in', cap: name }, { to: [148, 80], d: 260, e: 'out' }, { to, d: 800, e: 'in' }, { to, d: 400 }] });
+    sc.cuts = M({ alt: 'Cuts: 45-degree speed cut, 90-degree plant, 180-degree comeback, both sides', bg, variants: [
+      mk('45° speed cut', [240, 24]), mk('45° speed cut', [240, 136]),
+      mk('90° plant', [150, 10]), mk('90° plant', [150, 150]),
+      mk('180° comeback', [40, 80]),
+    ] });
+  }
+
+  // reactive evasion starts
+  {
+    const bg = zone(126, 56, 68, 48) + txt(160, 120, 'start off-balance here') ;
+    const starts = ['Start: on one foot', 'Start: mid-spin', 'Start: shuffling', 'Start: kneeling'];
+    const dirs = [{ t: '← GO', to: [34, 70] }, { t: 'GO →', to: [286, 90] }, { t: '↖ GO', to: [70, 14] }, { t: 'GO ↘', to: [262, 148] }, { t: '↙ GO', to: [62, 146] }, { t: 'GO ↗', to: [258, 12] }];
+    const variants = [];
+    starts.forEach((s, i) => dirs.forEach((d, j) => {
+      const wob = i === 2 ? [{ to: [146, 80], d: 300, cap: s }, { to: [174, 80], d: 450 }, { to: [150, 80], d: 450 }] : i === 1 ? [{ to: [166, 74], d: 400, cap: s }, { to: [160, 86], d: 300 }, { to: [156, 78], d: 300 }] : [{ to: [160, 80], d: 1150, cap: s }];
+      const t = wob.reduce((a, b) => a + b.d, 0);
+      variants.push({ start: [160, 80], segs: [...wob, { to: d.to, d: 900, e: 'in', cap: 'React · go' }, { to: d.to, d: 500 }], events: [{ t: t - 100, text: d.t, d: 1000 }] });
+    }));
+    sc.evade = M({ alt: 'Reactive evasion starts: begin off-balance, react to a cue, cut and go', bg, variants, random: true });
+  }
+
+  // shadow evasion: 4x4 yd box = 100px
+  {
+    const bx = 110, by = 30;
+    const bg = zone(bx, by, 100, 100, 'm-zone m-box') + txt(160, 152, '4 × 4 yd box') + cone(bx, by) + cone(bx + 100, by) + cone(bx, by + 100) + cone(bx + 100, by + 100);
+    sc.shadow = M({ alt: 'Shadow evasion: flow between shuffle, crossover, drop step and spin inside a small box', bg, variants: [{
+      start: [130, 110], segs: [
+        { to: [190, 110], d: 900, e: 'lin', cap: 'Shuffle' },
+        { to: [160, 70], d: 600, e: 'io', cap: 'Crossover' },
+        { to: [130, 50], d: 500, e: 'io' },
+        { to: [150, 60], d: 300, e: 'io', cap: 'Drop step' },
+        { to: [186, 46], d: 500, e: 'io' },
+        { to: [196, 64], d: 250, cap: 'Spin' }, { to: [182, 74], d: 250 }, { to: [192, 86], d: 250 },
+        { to: [140, 96], d: 700, e: 'io', cap: 'Keep flowing' },
+        { to: [130, 110], d: 400, e: 'io' },
+      ] }] });
+  }
+
+  // 5-10-5 shuttle, 14 px per yard
+  {
+    const xs = [90, 160, 230];
+    const bg = xs.map(x => line(x, 30, x, 130, x === 160 ? 'm-line m-strong' : 'm-line')).join('') + txt(90, 146, '5 yd') + txt(160, 146, 'start') + txt(230, 146, '5 yd');
+    sc.shuttle = M({ alt: '5-10-5 shuttle: start in the middle, run 5 yards, touch, 10 back, touch, 5 through the middle', bg, variants: [{
+      start: [160, 80], segs: [{ to: [160, 80], d: 600, cap: 'Stance on middle line' }, { to: [228, 80], d: 900, e: 'in', cap: '5 yd · touch line' }, { to: [92, 80], d: 1500, e: 'io', cap: '10 yd · touch line' }, { to: [200, 80], d: 1000, e: 'in', cap: '5 yd through middle' }, { to: [250, 80], d: 400, e: 'out' }] }] });
+  }
+
+  // flying 10s: 12 px/yd -> build 12 yd (144px), fly 8 yd... scaled to fit
+  {
+    const bg = zone(20, 66, 150, 28) + txt(95, 112, 'build 12 yd') + zone(170, 66, 100, 28, 'm-zone m-hot') + txt(220, 112, 'fly 8 yd · max') + cone(170, 80) + cone(270, 80);
+    sc.flying = M({ alt: 'Flying 10s: build speed over 12 yards, then hold top speed through an 8-yard zone', bg, variants: [{
+      start: [20, 80], segs: [{ to: [170, 80], d: 1800, e: 'in', cap: 'Smooth build' }, { to: [270, 80], d: 520, e: 'lin', cap: 'Top speed · relaxed' }, { to: [310, 80], d: 700, e: 'out', cap: 'Glide down' }] }] });
+  }
+
+  // reactive cue: dropped football bounce
+  {
+    const bg = zone(126, 56, 68, 48) + txt(160, 122, 'ready stance');
+    const dirs = [{ t: 'bounce ←', to: [40, 80] }, { t: 'bounce →', to: [280, 80] }, { t: 'bounce ↖', to: [60, 16] }, { t: 'bounce ↗', to: [260, 16] }];
+    sc.cue = M({ alt: 'Reactive cue: react to a pointing friend or a random football bounce', bg, random: true, variants: dirs.map(d => ({
+      start: [160, 80], segs: [{ to: [160, 80], d: 1100, cap: 'Wait for the cue…' }, { to: d.to, d: 800, e: 'in', cap: 'React' }, { to: d.to, d: 400 }], events: [{ t: 1000, text: d.t, d: 900 }] })) });
+  }
+
+  /* ---------- footwork (top-down feet, 240 x 150) ---------- */
+  const F = (o) => Object.assign({ kind: 'feet', w: 240, h: 150 }, o);
+  {
+    const bg = `<line x1="20" y1="75" x2="220" y2="75" class="m-line m-chalk"/><line x1="120" y1="12" x2="120" y2="138" class="m-line m-chalk"/>`;
+    const k = [];
+    const both = (lx, ly, rx, ry, d, cap) => k.push({ d, L: [lx, ly, 0], R: [rx, ry, 0], cap });
+    both(60, 96, 80, 96, 0, 'Forward–back');
+    for (let i = 0; i < 4; i++) { both(60, 54, 80, 54, 170); both(60, 96, 80, 96, 170); }
+    both(100, 34, 112, 34, 400, 'Side–side');
+    for (let i = 0; i < 4; i++) { both(128, 34, 140, 34, 170); both(100, 34, 112, 34, 170); }
+    k.push({ d: 400, L: [164, 96, 0], R: [184, 54, 0], cap: 'Scissors' });
+    for (let i = 0; i < 4; i++) { k.push({ d: 170, L: [164, 54, 0], R: [184, 96, 0] }); k.push({ d: 170, L: [164, 96, 0], R: [184, 54, 0] }); }
+    k.push({ d: 400, L: null, R: [110, 112, 0], cap: 'Single leg · side–side' });
+    for (let i = 0; i < 4; i++) { k.push({ d: 190, L: null, R: [132, 112, 0] }); k.push({ d: 190, L: null, R: [110, 112, 0] }); }
+    k.push({ d: 400, L: [60, 96, 0], R: [80, 96, 0] });
+    sc.linehops = F({ alt: 'Line hops: forward-back, side-side, scissors, and single-leg over a chalk line', bg, keys: k });
+  }
+  {
+    const cx = 120, cy = 92, R2 = 52;
+    const bg = `<circle cx="${cx}" cy="${cy}" r="9" class="m-marker m-center"/>` +
+      [[0, -1, '12'], [0.707, -0.707, '45°'], [1, 0, 'side']].map(([dx, dy, l]) => `<circle cx="${cx + dx * R2}" cy="${cy + dy * R2}" r="13" class="m-spot"/><text x="${cx + dx * R2}" y="${cy + dy * R2 + (dy < 0 ? -18 : 26)}" text-anchor="middle" class="m-label">${l}</text>`).join('') +
+      `<text x="${cx}" y="${cy + 30}" text-anchor="middle" class="m-label">center · turn 90° here</text>`;
+    const home = [cx, cy, 0];
+    const k = [{ d: 0, L: null, R: home, cap: 'Stand on one leg in the middle' }];
+    [[[cx, cy - R2, 0], 'Hop forward · stick 2 s'], [[cx + R2 * 0.707, cy - R2 * 0.707, 0], 'Hop 45° · stick 2 s'], [[cx + R2, cy, 0], 'Hop sideways · stick 2 s'], [[cx, cy, 90], 'Hop + turn 90° · stick 2 s']].forEach(([to, cap]) => {
+      k.push({ d: 600, L: null, R: home });
+      k.push({ d: 320, L: null, R: to, cap });
+      k.push({ d: 1200, L: null, R: to });
+      k.push({ d: 320, L: null, R: home, cap: 'Back to center' });
+    });
+    sc.clock = F({ alt: 'Hop-and-stick clock: hop to each spot on one leg and freeze the landing', bg, keys: k });
+  }
+
+  return sc;
+})();
+
+/* ---------- Program content ---------- */
+const YT = q => 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q);
+
+/* Exercise library. Every field is optional except name. */
+const EX = {
+  /* ----- The 9 (warm-up) ----- */
+  skipseries: {
+    name: 'Skip series', demo: 'skip',
+    what: 'Five kinds of skipping on a 20-yard lane. It warms you up and gets your rhythm going in every direction.',
+    steps: [
+      'Mark a 20-yard lane with two shoes or bottles.',
+      'Go down and back once for each: easy skip, skip for height, lateral skip (face one way going down, the other way coming back), backward skip, carioca.',
+      'Carioca = moving sideways while the back leg crosses in front, then behind, then in front.',
+      'Walk back after each one. Use those walks to set out your markers for the session.',
+    ],
+    cue: 'Bouncy and quiet',
+    mistakes: ['Rushing. This is the warm-up, not the workout.', 'Flat-footed skipping. Stay on the balls of your feet.'],
+    easier: 'Do only easy skip and lateral skip.',
+    why: 'It raises body temperature and rehearses rhythm forward, sideways and backward. The research-backed 11+ warm-up opens with running drills in several directions too.',
+    video: 'carioca lateral skip backward skip warm up drill',
+  },
+  wgs: {
+    name: 'World’s greatest stretch', demo: 'wgs', dose: '3 per side',
+    what: 'A lunge that stretches your hip flexor, groin, hamstring and upper back in one move.',
+    steps: [
+      'Step into a long lunge with your right foot forward.',
+      'Put both hands on the ground inside your right foot.',
+      'Drop your right elbow toward your right ankle and hold for 2 seconds.',
+      'Rotate open: reach your right hand to the sky and look at it.',
+      'Hand back down, step back up, and switch sides.',
+    ],
+    cue: 'Long through the back leg',
+    mistakes: ['Letting the back knee crash to the ground.', 'Rushing the twist. Go slow and breathe out as you reach up.'],
+    easier: 'Put your back knee down on the grass.',
+    why: 'It opens up the hips, groin and upper back, which are the joints that get stiff from lifting and sitting.',
+    video: 'worlds greatest stretch how to',
+  },
+  legswing: {
+    name: 'Leg swings', demo: 'legswing', dose: '10 + 10 per leg',
+    what: 'Swing one leg like a pendulum while holding a wall or fence.',
+    steps: [
+      'Stand side-on to a wall or fence and hold it with one hand.',
+      'Swing the outside leg forward and back 10 times. Start small and let it grow.',
+      'Turn to face the wall. Swing the same leg side to side across your body 10 times.',
+      'Switch legs.',
+    ],
+    cue: 'Loose like a pendulum',
+    mistakes: ['Arching your back to swing higher.', 'Forcing it. Let momentum do the work.'],
+    why: 'Moving stretches suit power work better than long static holds, which can sap a little power right before you jump.',
+    video: 'leg swings front to back side to side warm up',
+  },
+  slrdl: {
+    name: 'Single-leg RDL reach', demo: 'slrdl', dose: '5 per side',
+    what: 'Balance on one leg and tip forward like a seesaw, reaching forward while the other leg reaches back.',
+    steps: [
+      'Stand on one leg with a soft (slightly bent) knee.',
+      'Hinge at the hips: chest goes forward and down, free leg goes straight back.',
+      'Reach both hands forward. Your body makes a T.',
+      'Pause for 1 second, then come back up tall.',
+    ],
+    cue: 'Reach for the walls in front and behind',
+    mistakes: ['Hips twisting open. The back foot’s toes should point at the ground.', 'Rounding your back.'],
+    easier: 'Lightly touch the back toes down for balance.',
+    why: 'It wakes up the hamstrings and practices one-leg balance, a preview of every landing in the session.',
+    video: 'single leg RDL reach bodyweight',
+  },
+  latlunge: {
+    name: 'Lateral lunge', demo: 'latlunge', dose: '5 per side',
+    what: 'A wide side-step where you sit into one hip and keep the other leg straight.',
+    steps: [
+      'Stand with your feet wide, toes forward.',
+      'Push your hips back and sit into your right hip. The right knee bends, the left leg stays straight.',
+      'Keep both feet flat and your chest up.',
+      'Push back to the middle and switch sides.',
+    ],
+    cue: 'Sit into the pocket',
+    mistakes: ['Knee caving inward. Keep it over your toes.', 'The heel of the bent leg lifting.'],
+    why: 'It opens the groin (adductors), which work hardest when you cut.',
+    video: 'lateral lunge bodyweight form',
+  },
+  pogo: {
+    name: 'Pogo hops', demo: 'pogo', dose: '2 × 15',
+    what: 'Small, quick bounces where your ankles do most of the work and your knees barely bend.',
+    steps: [
+      'Stand tall, feet hip-width apart.',
+      'Bounce up and down using mostly your ankles. Knees stay nearly straight.',
+      'Heels never touch the ground.',
+      'Spend as little time on the ground as possible, like the ground is hot.',
+    ],
+    cue: 'Bounce like a basketball',
+    mistakes: ['Bending the knees a lot, which turns it into a squat jump.', 'Landing on your heels.', 'Loud landings. Quiet means springy.'],
+    easier: 'Smaller, slower bounces.',
+    harder: 'Bounce higher while keeping contacts just as short.',
+    why: 'It wakes up the stiff, springy ankle and Achilles tendon that every sprint stride and jump relies on. Coaches call this “elastic” or “reactive” ability.',
+    video: 'pogo hops plyometric technique',
+  },
+  ankledribble: {
+    name: 'Ankle dribbles', demo: 'ankledribble', dose: '2 × 15 yd',
+    what: 'Tiny, fast steps where each foot rolls over the ball of the foot and barely leaves the ground.',
+    steps: [
+      'Stand tall and take tiny steps forward, each foot landing just in front of the other.',
+      'Roll over the ball of each foot. The ankle stays under the knee.',
+      'Fast rhythm, slow travel. It takes a while to cover 15 yards.',
+    ],
+    cue: 'Quick, quiet taps',
+    mistakes: ['Big steps.', 'Leaning back.'],
+    why: 'It teaches your foot to strike under your hips and stay stiff, which is exactly what it needs to do in a sprint.',
+    video: 'ankle dribbles sprint drill',
+  },
+  askip: {
+    name: 'A-skips', demo: 'askip', dose: '2 × 15 yd',
+    what: 'A rhythmic skip where one knee drives up and that foot then strikes straight down under you.',
+    steps: [
+      'Skip forward. The rhythm is step-step, step-step.',
+      'On each skip, drive one knee up to hip height with your toes pulled up.',
+      'Then strike that foot down and back so it lands under your hips.',
+      'The opposite arm drives forward with the knee.',
+    ],
+    cue: 'Hammer the ground under you',
+    mistakes: ['Leaning back.', 'The foot landing out in front of your body, which acts like a brake.'],
+    why: 'It rehearses sprint posture and the “stiff foot before contact” that Frans Bosch calls pretension.',
+    video: 'A skip sprint drill technique',
+  },
+  buildup: {
+    name: 'Build-ups', demo: 'sprint', dose: '2: one at 70%, one at 85%',
+    what: 'Runs that start easy and smoothly speed up to a target effort, then glide down.',
+    steps: [
+      'Run 30–40 yards, smoothly speeding up to the target effort.',
+      '70% is fast but comfortable. 85% is fast and controlled, not all-out.',
+      'Glide down gradually. Don’t slam on the brakes.',
+    ],
+    cue: 'Smooth, then fast',
+    why: 'The last step of the warm-up. It tells your nervous system hard running is coming.',
+    video: 'sprint build ups warm up',
+  },
+
+  /* ----- Session A ----- */
+  approach: {
+    name: 'Approach jumps', demo: 'approach2', demoOne: 'approach1',
+    what: 'A running jump to touch something high. This is the dunk movement itself.',
+    steps: [
+      'Pick a target: a branch, a gutter, a rim or backboard, or a chalk mark on a wall or garage door.',
+      'Use a 3–5 step approach. Start slow and speed up, so your last two steps are the fastest.',
+      'TAKEOFF',
+      'Reach with one hand and jump through the target, as if it were a few inches higher than it is.',
+      'Land on both feet, soft.',
+      'Walk back slowly. Rest about 45–60 seconds so every rep is a quality rep.',
+      'With-ball reps: hold a basketball the way you’d dunk it (palm it or two hands) and touch the ball to the target.',
+    ],
+    takeoff: {
+      two: 'Two-foot takeoff: make your second-to-last step long and low, then plant both feet quickly (right-left or left-right). Swing your arms back on the plant, then hard up.',
+      one: 'One-foot takeoff: keep the approach fast. Plant your jumping foot heel-to-toe a little in front of you, and drive the other knee up hard as you reach.',
+      none: 'Takeoff: you haven’t picked one yet. In week 2 you test both. Two-foot: long, low second-to-last step, then plant both feet and swing your arms up. One-foot: fast approach, plant heel-to-toe, drive the other knee up.',
+    },
+    cue: 'Jump through the target',
+    mistakes: ['An approach too fast to control. If your last two steps stutter, slow down.', 'Looking at your feet instead of the target.', 'Turning it into conditioning. Rest fully between reps.'],
+    easier: 'Use a 2-step approach.',
+    harder: 'More reps with the ball (Phase 3).',
+    why: 'Your jump goes up most when you practice jumping all-out, in the exact way you use it. Ball reps are trained on their own because carrying a ball changes your arm swing and costs you some height.',
+    video: 'approach vertical jump technique dunk',
+  },
+  reacthop: {
+    name: 'Low reactive hops', demo: 'reacthop', dose: '3 × 4',
+    what: 'Like pogo hops, but bigger: four bounces in a row, as high as you can, with very short ground contact.',
+    steps: [
+      'Stand tall. Bounce four times in a row.',
+      'Each bounce: as high as you can while keeping your time on the ground short and your knees fairly straight.',
+      'Swing your arms up with each bounce.',
+      'Rest about 60 seconds between sets.',
+    ],
+    cue: 'The ground is hot',
+    mistakes: ['Sinking into a deep squat between hops.', 'Heels touching down.'],
+    why: 'It builds reactive strength, which is using the stretch and recoil of your tendons instead of a slow squat. It’s the safe lead-in to drop jumps.',
+    video: 'repeated tuck jumps vs pogo reactive hops plyometric',
+  },
+  dropjump: {
+    name: 'Drop jumps', demo: 'dropjump', dose: '3 × 4',
+    what: 'Step off a low ledge, and the instant you land, jump up as high as you can.',
+    steps: [
+      'Use something 12–18 inches high that can’t move: a porch step, a sturdy deck edge or a curb. Never a chair.',
+      'Stand at the edge. Step off. Don’t hop up first, just let yourself drop.',
+      'Land on the balls of both feet and bounce up immediately. Keep the knee bend small and quick.',
+      'Land, stick it, step back up. Take about 20 seconds between reps and 90 seconds between sets.',
+    ],
+    cue: 'Be a spring, not a sponge',
+    mistakes: ['Jumping up off the step first, which makes the drop too high.', 'Heels slamming down.', 'Sinking deep on contact, which turns it into a slow squat jump.'],
+    phaseNote: 'Phase 3, finding your best height: in your first Phase 3 session, try a few drops from each height you have (about 12, 18 and 24 inches). Your best height is the highest one where you still bounce up high with a short, quiet contact. If your heels slam or you sink deep, it’s too high.',
+    why: 'Drop jumps are one of the best tools for reactive strength, the springiness behind a fast takeoff.',
+    video: 'drop jump technique plyometric',
+  },
+  slhop: {
+    name: 'Single-leg hop for height', demo: 'slhop', dose: '2 × 3 per leg',
+    what: 'Jump as high as you can off one leg, land on that same leg, and freeze.',
+    steps: [
+      'Stand on one leg. Dip slightly and swing your arms.',
+      'Jump as high as you can, driving the free knee up.',
+      'Land on the same leg with a soft knee and freeze for 2 full seconds.',
+      'If you can’t hold the landing, the jump was too big. Make it smaller.',
+    ],
+    cue: 'Land like a cat',
+    mistakes: ['The knee caving inward on landing. Check it on video once.', 'Wobbling around. A stuck landing is the point.'],
+    why: 'One-leg jump power plus landing control. Both carry over to one-foot takeoffs and every plant and cut.',
+    video: 'single leg vertical hop and stick',
+  },
+  skater: {
+    name: 'Skater bound and stick', demo: 'skater', dose: '2 × 3 per side',
+    what: 'Jump sideways from one leg to the other, like a speed skater, and freeze the landing.',
+    steps: [
+      'Stand on your right leg.',
+      'Jump sideways to the left, as far as you can while staying in control.',
+      'Land on your left leg only and freeze for 2 seconds. The free leg trails behind.',
+      'Jump back the other way.',
+    ],
+    cue: 'Push the ground away sideways',
+    mistakes: ['Landing on both feet.', 'The knee caving in.', 'The torso flopping sideways.'],
+    why: 'Sideways power and landing control. That’s exactly the job of your plant leg in a cut.',
+    video: 'skater bound stick landing',
+  },
+  broad: {
+    name: 'Broad jump', demo: 'broad', dose: '5 reps',
+    what: 'A standing long jump: jump forward as far as you can and stick the landing.',
+    steps: [
+      'Feet hip-width apart at a line.',
+      'Swing your arms back as you push your hips back.',
+      'Throw your arms forward and jump out as far as you can.',
+      'Land on both feet and stick it. No stepping forward.',
+      'Rest 45–60 seconds between reps.',
+    ],
+    cue: 'Throw yourself at the horizon',
+    mistakes: ['Landing stiff-legged.', 'Falling forward. That means the jump outran your landing, so the rep doesn’t count.'],
+    why: 'Horizontal power, the kind tied to your first few steps of acceleration.',
+    video: 'standing broad jump technique',
+  },
+  ballcontrol: {
+    name: 'Ball control', dose: '≈5 min',
+    what: 'Three calm hand drills with a basketball. They let you come down after max jumping.',
+    steps: [
+      'Fingertip holds: hold the ball on your fingertips (not your palm) at arm’s length. 3 × 15 seconds per hand.',
+      'Cradle catches: toss the ball a few feet up and catch it in one hand, letting it sink quietly into your wrist and forearm. 10 per hand.',
+      'One-hand slaps: slap the ball hard from one hand into the other and grip it with your fingertips. 10 per hand.',
+    ],
+    cue: 'Soft hands, strong fingers',
+    why: 'It does two jobs. It calms you down after the hardest part of the session, and it builds grip and finger strength for palming and catching. Palming depends mostly on hand size, so this improves control, not hand span.',
+    video: 'basketball fingertip control drills palm ball',
+  },
+
+  /* ----- Session B ----- */
+  accel: {
+    name: 'Accelerations', demo: 'accel', dose: '5 × 15 yd',
+    what: 'All-out 15-yard sprints from a standstill. Use a different start each rep.',
+    steps: [
+      'Rotate starts: 1) two-point (standing, split stance), 2) three-point (one hand down), 3) falling start (lean forward until you have to run), 4) push-up start (lie face down, pop up and go), 5) backpedal-turn (backpedal 3 steps, flip your hips, sprint).',
+      'Sprint 15 yards. Stay low and leaning for the first few steps and rise gradually.',
+      'Walk back. Rest 60–90 seconds, which is about the walk back plus a few breaths.',
+    ],
+    cue: 'Push the ground behind you',
+    mistakes: ['Popping straight up in the first two steps.', 'Overstriding, where the foot reaches way out in front.', 'Tense face and shoulders.'],
+    why: 'Sprinting is the best sprint training. Mixing the starts trains you to get up to speed from awkward positions, like you have to in a game.',
+    video: 'acceleration sprint technique first steps',
+  },
+  evade: {
+    name: 'Reactive evasion starts', demo: 'evade', dose: '6 reps',
+    what: 'Start off-balance, wait for a cue, then cut and go the way it tells you.',
+    steps: [
+      'Get into an off-balance start: on one foot, mid-spin, shuffling sideways, or kneeling. Change it every rep.',
+      'Get a cue. Best: a friend points. Alone: drop a football and go the way it bounces, or use a free reaction-timer app with random arrows or colors.',
+      'On the cue, cut that way and sprint 5–8 yards.',
+      'Walk back and reset.',
+    ],
+    cue: 'Push the grass away from you',
+    mistakes: ['Guessing before the cue.', 'Standing up tall to change direction.'],
+    phaseNote: 'Phase 3: if a friend is around, play 1v1. They try to tag you in a 5-yard-wide channel.',
+    why: 'Reading and reacting (reactive agility) is a different skill from straight-line speed. In one study, three weeks of reactive training sped up decision time. Starting off-balance trains you to get organized fast, which is a big part of how Kamara moves.',
+    video: 'reactive agility drill partner pointing',
+  },
+  bound: {
+    name: 'Bounds', demo: 'bound', dose: '3 × 20 yd',
+    what: 'Exaggerated running. Push off one leg, float, land on the other, and push again.',
+    steps: [
+      'Jog in for a few steps.',
+      'Push hard off one leg, float forward, and land on the other leg.',
+      'Push off again right away. Long and springy, not fast.',
+      'Swing your arms big. Walk back between reps.',
+    ],
+    cue: 'Float, then pop',
+    mistakes: ['Landing with the foot way out in front, which brakes you.', 'Tiny, choppy bounds.'],
+    easier: 'Shorter distance, or skip-bounds (a skip with a long push).',
+    why: 'One-leg, spring-loaded power going forward. It’s a close cousin of acceleration.',
+    video: 'alternate leg bounding technique',
+  },
+  decel: {
+    name: 'Deceleration', demo: 'decel', dose: '5 × 10 yd',
+    what: 'Sprint 10 yards, then stop in three steps and hold a balanced stance.',
+    steps: [
+      'Accelerate for 10 yards.',
+      'Stop in exactly 3 steps. Each step gets shorter and you sink lower.',
+      'Finish in an athletic stance: chest over knees, feet a bit wider than hips. Hold for 2 seconds.',
+    ],
+    cue: 'Stop on a dime',
+    mistakes: ['Stopping with straight legs.', 'Leaning back.', 'One giant braking step.'],
+    why: 'You can only go as fast as you can stop. Braking is when your knees and ankles take the biggest forces, so it’s armor and speed at once.',
+    video: 'deceleration drill 3 step stop athletic stance',
+  },
+  cuts: {
+    name: 'Cuts', demo: 'cuts', dose: '6 reps',
+    what: 'Sprint to a marker and change direction. Three types, each to both sides.',
+    steps: [
+      '45° speed cut: round and fast. Barely slow down, push off the outside foot.',
+      '90° plant: plant hard on the outside foot and turn sharp.',
+      '180° comeback: sprint, stop, turn and sprint back, like a comeback route.',
+      'Do each type to both sides, so 6 reps in all. Run 5–6 yards in, 5 yards out.',
+      'Plant foot outside your body, hips low.',
+    ],
+    cue: 'Push the grass away from you',
+    mistakes: ['Knee caving in over the plant foot.', 'Standing up tall at the plant.', 'Crossing your feet.'],
+    why: 'Planned cuts build the mechanics. The reactive drills teach you when to use them.',
+    video: 'football cutting technique 45 90 180',
+  },
+  rhythm: {
+    name: 'Rhythm runs', demo: 'rhythm', dose: '4 reps',
+    what: 'Build up speed, then run through six evenly spaced markers.',
+    steps: [
+      'Lay 6 flat markers in a line about 5½ feet apart (about two big walking steps).',
+      'Start 10 yards back. Build to 85% and run through the markers.',
+      'Each foot lands just past a marker.',
+      'Adjust the spacing so you hit them naturally, without reaching or chopping.',
+      'Walk back between reps.',
+    ],
+    cue: 'Quiet feet, loose face',
+    mistakes: ['Looking down at the markers. Look ahead and feel them.', 'Reaching for a marker that’s too far.'],
+    why: 'It sets a stride rhythm and gets you running tall and smooth without thinking about form. This is the most direct smoothness drill in the program.',
+    video: 'wicket runs sprint drill mini hurdles',
+  },
+  flying: {
+    name: 'Flying 10s', demo: 'flying', dose: '3 reps (Phase 3)',
+    what: 'Build speed for 12 yards, then hold top speed through an 8-yard zone.',
+    steps: [
+      'Set cones at 0, 12 and 20 yards.',
+      'Build smoothly from 0 to 12 yards.',
+      'From 12 to 20 yards, run at top speed, staying relaxed.',
+      'Glide down. Rest about 2 minutes.',
+    ],
+    cue: 'Fast and loose',
+    why: 'It practices top speed. Mostly that means staying relaxed while moving fast.',
+    video: 'flying 10 sprint drill',
+  },
+  nordic: {
+    name: 'Nordic hamstring curls', demo: 'nordic',
+    what: 'Kneel with your feet anchored and lower your body forward as slowly as you can.',
+    steps: [
+      'Kneel on a cushion with your heels hooked under the couch (or a friend holding your ankles).',
+      'Body straight from knees to head, hips pushed forward.',
+      'Lower forward as slowly as you can, fighting it with your hamstrings.',
+      'When you can’t hold it, catch yourself with your hands like a push-up.',
+      'Push yourself back up with your hands. At first, don’t try to pull yourself up with your hamstrings.',
+      'Rest 60–90 seconds between sets.',
+    ],
+    cue: 'Lower like a drawbridge',
+    mistakes: ['Bending at the hips (butt sticking out). That’s cheating.', 'Dropping fast. The slow part is the exercise.'],
+    safety: 'Expect sore hamstrings for the first week or two. That’s normal. Don’t add reps faster than the plan.',
+    why: 'Programs that include the Nordic cut hamstring injuries roughly in half (a pooled analysis of 15 studies and about 8,500 athletes). Hamstring strains are the most common sprinting injury.',
+    video: 'nordic hamstring curl at home couch',
+  },
+
+  /* ----- Session C ----- */
+  march: {
+    name: 'March', demo: 'march', dose: '30 s',
+    what: 'Tall marching: knee up, opposite arm, steady rhythm.',
+    steps: ['Stand tall. Drive one knee to hip height and swing the opposite arm.', 'Alternate in a steady rhythm, in place or over 20 yards.'],
+    cue: 'Tall and proud',
+    video: 'high knee march warm up',
+  },
+  linehops: {
+    name: 'Line hops', demo: 'linehops',
+    what: 'Fast little hops back and forth over a line.',
+    steps: [
+      'Use a chalk line, a sidewalk crack, or a towel edge on carpet.',
+      'Forward–back: feet together, hop over the line and back. 4 × 10 seconds.',
+      'Side–side: hop sideways over the line and back. 4 × 10 seconds.',
+      'Scissors: one foot in front of the line and one behind, switch fast. 4 × 10 seconds.',
+      'Single-leg side–side: 2 × 8 seconds per leg.',
+      'Rest about 20 seconds between bouts.',
+    ],
+    cue: 'Quick and quiet',
+    mistakes: ['Big, high hops. Stay low and fast.', 'Loud landings.'],
+    why: 'Foot speed, ankle stiffness and rhythm, all without stress on the body.',
+    video: 'line hops agility drill',
+  },
+  clock: {
+    name: 'Hop-and-stick clock', demo: 'clock', dose: '2 rounds per leg',
+    what: 'Hop on one leg to spots around you like the numbers on a clock, and freeze each landing.',
+    steps: [
+      'Stand on one leg in the middle of an imaginary clock.',
+      'Hop forward to 12 o’clock and freeze for 2 seconds. Hop back to the middle.',
+      'Then hop at 45°, then sideways (3 o’clock on your right leg, 9 o’clock on your left).',
+      'Then do a hop that turns you 90° in place.',
+      'That’s one round. Hops are moderate, 1–2 feet.',
+    ],
+    cue: 'Freeze like a photo',
+    mistakes: ['Hopping too far to stick it.', 'The knee caving in.'],
+    why: 'Balance is specific to the task. This trains the exact moment you land on one leg while moving in different directions.',
+    video: 'single leg hop and stick multidirectional',
+  },
+  slstance: {
+    name: 'Single-leg stance + catches', demo: 'slstance', dose: '2 × 30 s per leg',
+    what: 'Balance on one leg while your attention is somewhere else.',
+    steps: [
+      'Stand on one leg with a soft knee for 30 seconds.',
+      'Phase 1: throw a ball against a wall and catch it.',
+      'Phase 2: eyes closed with slow head turns, or catch while counting backward from 100 by 7s.',
+      'Phase 3: a friend tosses at random or calls out directions.',
+    ],
+    cue: 'Stay tall',
+    why: 'In games you balance while you’re watching something else. That’s the skill.',
+    video: 'single leg balance ball toss wall',
+  },
+  fallrecover: {
+    name: 'Fall and recover', demo: 'fallrecover', dose: '4 directions × 2',
+    what: 'Lean until you have to step, then catch yourself in one step.',
+    steps: [
+      'Stand tall and stiff as a board.',
+      'Lean from the ankles (forward, then left, right, and a little backward) until you have to step.',
+      'Catch yourself in one step in an athletic stance and freeze.',
+      'Backward: lean only a little and take a short step.',
+    ],
+    cue: 'Catch it in one step',
+    why: 'It trains the reflex recovery step you need when you get bumped or clipped and have to reorganize instantly.',
+    video: 'falling start drill athletic stance recovery step',
+  },
+  shadow: {
+    name: 'Shadow evasion', demo: 'shadow', dose: '3 × 30 s',
+    what: 'Make moves in a small box against an imaginary defender, flowing from one move to the next without stopping.',
+    steps: [
+      'Mark a 4 × 4 yard box (four shoes).',
+      'Move at about 50% effort for 30 seconds: shuffle, crossover step, drop step (open your hips and step back), spin.',
+      'Link every move into the next. Never stop to set up.',
+      'Rest 30–60 seconds between rounds.',
+    ],
+    cue: 'Flow like water',
+    phaseNote: 'Phase 3: faster, about 70%, and change the order more.',
+    why: 'This is the Kamara and Smith-Njigba drill. The goal is transitions that look connected.',
+    video: 'shadow evasion drill running back footwork box',
+  },
+  copenhagen: {
+    name: 'Copenhagen plank', demo: 'copenhagen', dose: '3 × 15–30 s per side',
+    what: 'A side plank with your top leg up on the couch. Your inner thigh holds you up.',
+    steps: [
+      'Lie on your side, propped on your elbow (elbow under shoulder).',
+      'Put your top leg on the couch seat. Phase 1, short lever: knee on the couch (easier). Phase 2 and later, long lever: inside of the ankle on the couch.',
+      'Lift your hips until your body is a straight line. The top leg’s inner thigh does the work.',
+      'The bottom leg hangs, or lifts to touch the underside of the couch.',
+      'Hold 15–30 seconds. 3 per side.',
+    ],
+    cue: 'Straight line, head to feet',
+    mistakes: ['Hips sagging or piking.', 'Shoulder shrugging up to your ear.'],
+    why: 'It builds groin (adductor) strength. In one large trial, a program built on this exercise cut groin problems by 41%. Other studies are less clear, but it reliably builds groin strength in about two minutes.',
+    video: 'copenhagen plank short lever long lever',
+  },
+  calfraise: {
+    name: 'Single-leg calf raise', demo: 'calfraise', dose: '2 × 10 per leg, straight and bent knee',
+    what: 'Slow calf raises on one foot off a step edge, done with a straight knee and then a bent knee.',
+    steps: [
+      'Stand on one foot on a stair edge, one hand on the wall.',
+      'Rise as high as you can over 2 seconds and pause 1 second.',
+      'Lower over 3 seconds until your heel is below the step.',
+      '10 reps with a straight knee, then 10 with the knee bent.',
+    ],
+    cue: 'Up tall, down slow',
+    why: 'Calf and Achilles capacity for all the jumping and sprinting. The bent-knee version targets the soleus, the deep calf muscle that handles the biggest forces when you sprint.',
+    video: 'single leg calf raise step bent knee soleus',
+  },
+  tibraise: {
+    name: 'Tibialis raises', demo: 'tibraise', dose: '2 × 20',
+    what: 'Lean against a wall and pull your toes up toward your shins.',
+    steps: [
+      'Stand with your back on a wall, heels about a foot out.',
+      'Keep your legs straight. Pull your toes up as high as you can, then tap them down.',
+      'A burn in the front of the shin is normal.',
+    ],
+    cue: 'Toes to the sky',
+    why: 'It strengthens the shin muscles that control your foot on landing. The evidence that it prevents shin splints is thin, but it’s cheap insurance.',
+    video: 'tibialis raise against wall',
+  },
+  splitiso: {
+    name: 'Split-squat hold', demo: 'splitiso', dose: '2 × 30 s per leg',
+    what: 'Hold the bottom of a split squat.',
+    steps: [
+      'Take a long split stance.',
+      'Lower until the back knee hovers 1–2 inches off the floor, with the front shin about vertical.',
+      'Hold 30 seconds and push the floor away. Breathe.',
+    ],
+    cue: 'Push the floor away',
+    why: 'It strengthens tendons and knee control in a one-leg position with almost no fatigue.',
+    video: 'split squat isometric hold',
+  },
+
+  /* ----- Gym add-ons ----- */
+  rfess: {
+    name: 'Rear-foot-elevated split squat', demo: 'rfess', dose: '3–4 × 6–10, 1–2 reps in reserve',
+    what: 'A split squat with your back foot up on a bench. Your main quad lift.',
+    steps: [
+      'Back foot laces-down on a bench.',
+      'Front foot far enough forward that you can drop straight down.',
+      'Lower until the back knee nearly touches the floor. Drive up through the front foot.',
+      'Hold dumbbells once bodyweight is easy.',
+    ],
+    cue: 'Drop the elevator straight down',
+    why: 'It’s a bodybuilding staple, it trains one leg at a time, and it sidesteps your back-squat cramp issue.',
+    video: 'bulgarian split squat form',
+  },
+  rdl: {
+    name: 'Romanian deadlift', demo: 'rdl', dose: '3–4 × 6–10, 1–2 reps in reserve',
+    what: 'A hip hinge with a bar or dumbbells that loads your hamstrings while they’re stretched.',
+    steps: [
+      'Soft knees. Push your hips back while the bar slides down your thighs.',
+      'Keep your back flat. Go down until you feel a strong hamstring stretch (usually around mid-shin).',
+      'Stand up by squeezing your glutes.',
+    ],
+    cue: 'Close the car door with your hips',
+    why: 'It loads the hamstrings at long lengths and pairs well with the Nordics.',
+    video: 'romanian deadlift form',
+  },
+  seatedcalf: {
+    name: 'Seated calf raise', dose: '3 × 10–15',
+    what: 'A calf raise with your knees bent 90°, so the deep calf muscle (soleus) does most of the work.',
+    steps: ['Sit with the pad or weight on your knees.', 'Full range. Pause at the bottom stretch, then rise all the way up.'],
+    why: 'It emphasizes the soleus, which takes a lot of force when you sprint and land.',
+    video: 'seated calf raise form',
+  },
+
+  /* ----- Test-only ----- */
+  shuttle: {
+    name: '5-10-5 shuttle', demo: 'shuttle',
+    what: 'Start on the middle line, sprint 5 yards to one side, 10 yards back to the other, and 5 yards back through the middle.',
+    steps: ['Mark three lines 5 yards apart.', 'Straddle the middle line. Sprint 5 yards right and touch the line with your hand.', 'Sprint 10 yards left and touch that line.', 'Sprint back through the middle line.', 'Time it on video. Do 2 tries, one starting each direction, and keep the best.'],
+    video: '5-10-5 pro agility shuttle',
+  },
+};
+
+/* The 9: shared warm-up for A and B */
+const NINE = [
+  { min: '0–3', what: 'Skip series down and back on a 20-yd lane', ex: ['skipseries'] },
+  { min: '3–6', what: 'World’s greatest stretch × 3/side, leg swings 10/10, single-leg RDL reach × 5/side, lateral lunge × 5/side', ex: ['wgs', 'legswing', 'slrdl', 'latlunge'] },
+  { min: '6–9', what: 'Pogo hops 2 × 15, ankle dribbles 2 × 15 yd, A-skips 2 × 15 yd, two build-ups at 70% and 85%', ex: ['pogo', 'ankledribble', 'askip', 'buildup'] },
+];
+
+/* Prescriptions: rx = [phase1, phase2, phase3]; dl = deload version (weeks 4, 8, 12) */
+const SESSIONS = {
+  A: {
+    id: 'A', name: 'Jump & Land', short: 'Jump', level: 'High', minutes: 40, where: 'Backyard',
+    gear: 'Target to touch, basketball, a sturdy 12–18 in step (Phase 2+)',
+    intro: 'Max-effort jumping, then landing control. Every rep is about quality. Rest fully and stop when you get slower.',
+    why: 'Jump height goes up when you jump at full effort with full recovery. Fatigue turns jump training into conditioning, which doesn’t make you jump higher. The landing work is the armor that lets you jump a lot without getting hurt.',
+    stop: 'Stop any jump block when two reps in a row clearly fall short of your best.',
+    contacts: ['≈40 foot contacts', '≈55 foot contacts', '≈45–50 contacts, more of them max effort'],
+    blocks: [
+      { id: 'nine', time: '0–9', name: 'Warm-up: The 9', rx: ['Same routine every time'], warmup: true },
+      { id: 'approach', time: '9–21', name: 'Approach jumps', ex: ['approach'],
+        rx: ['8 reps at ~85–90% effort', '10 reps, full effort, half with ball', '10–12 reps, full effort, ⅔ with ball'],
+        dl: '5 reps, full effort',
+        how: 'Alternate no-ball and ball reps. Touch a target. Walk back between reps.' },
+      { id: 'reactive', time: '21–26', name: 'Reactive jumps', exByPhase: [['reacthop'], ['dropjump'], ['dropjump']],
+        rx: ['Low reactive hops in place, 3 × 4', 'Drop jumps from a 12–18 in step, 3 × 4', 'Drop jumps from your best height, 3 × 4'],
+        dl: '2 × 4',
+        how: 'Short, springy contacts. Step down from things, never jump down from them. Use porch steps, deck edges or curbs, never chairs.' },
+      { id: 'single', time: '26–31', name: 'Single-leg jumps', ex: ['slhop', 'skater'],
+        rx: ['SL hop 2 × 3/leg + skater bound 2 × 3/side'], dl: '1 × 3 of each',
+        how: 'Hold every landing for 2 full seconds.' },
+      { id: 'broad', time: '31–35', name: 'Broad jump', ex: ['broad'], rx: ['5 reps, stick the landing'], dl: '3 reps' },
+      { id: 'ball', time: '35–40', name: 'Ball control', ex: ['ballcontrol'], rx: ['Fingertip holds, cradle catches, one-hand slaps'], dl: 'Same, shorter',
+        how: 'This is your downshift after max jumps, and it trains your grip.' },
+    ],
+  },
+  B: {
+    id: 'B', name: 'Speed, Cuts & Evasion', short: 'Speed', level: 'High', minutes: 44, where: 'Backyard, in cleats',
+    gear: 'Cleats, 6–8 markers, a football (for solo cues), a couch for Nordics',
+    intro: 'Sprints, reaction and cutting at high quality, with hamstring armor at the end.',
+    why: 'Sprinting is the best training for sprinting. Most agility reps here react to something, because reading and reacting is its own skill. The cut and decel work teaches your body to handle the biggest forces in the sport.',
+    stop: 'If a sprint feels flat or you feel a hamstring “grab”, stop sprinting for the day. Do the Nordics only if the hamstring feels completely normal.',
+    blocks: [
+      { id: 'nine', time: '0–9', name: 'Warm-up: The 9', rx: ['Same routine every time'], warmup: true },
+      { id: 'accel', time: '9–16', name: 'Accelerations', exByPhase: [['accel'], ['accel'], ['accel', 'flying']],
+        rx: ['5 × 15 yd at 85–90%', '5 × 15 yd, full effort', '4 × 15 yd + 3 flying 10s, full effort'], dl: '3 × 15 yd',
+        how: 'Rotate starts: two-point, three-point, falling, push-up, backpedal-turn.' },
+      { id: 'evade', time: '16–22', name: 'Reactive evasion starts', ex: ['evade'],
+        rx: ['6 reps at ~80%', '6 reps, full effort', '6 reps, full effort, 1v1 with a friend if possible'], dl: '3 reps',
+        how: 'Start off-balance (one foot, mid-spin, shuffling, kneeling). On a cue, cut and go 5–8 yd.' },
+      { id: 'bounds', time: '22–25', name: 'Bounds', ex: ['bound'], rx: ['3 × 20 yd, alternate legs'], dl: '2 × 20 yd' },
+      { id: 'decel', time: '25–29', name: 'Deceleration', ex: ['decel'], rx: ['5 × 10 yd: accel, stop in 3 steps, hold 2 s'], dl: '3 reps' },
+      { id: 'cuts', time: '29–34', name: 'Cuts', ex: ['cuts'],
+        rx: ['6 reps at 75–80%: 45°, 90°, 180°, each side', '6 reps at 90%+', '6 reps, full effort'], dl: '3 reps at 80%' },
+      { id: 'rhythm', time: '34–39', name: 'Rhythm runs', ex: ['rhythm'], rx: ['4 × (10-yd build + 6 markers) at 85%'], dl: '2 reps',
+        how: 'Markers about 5½ ft apart. Adjust so you land just past each one without reaching.' },
+      { id: 'nordic', time: '39–44', name: 'Nordic hamstring curls', ex: ['nordic'], rx: ['2 × 4', '3 × 5', '3 × 6'], dl: '2 × 3',
+        how: 'Inside, feet under the couch.' },
+    ],
+  },
+  C: {
+    id: 'C', name: 'Control, Rhythm & Armor', short: 'Control', level: 'Low', minutes: 38, where: 'Indoors or yard',
+    gear: 'Shoes on (even indoors), a chalk line or towel, a ball, a wall, a couch, a stair',
+    intro: 'Low-intensity body control and tissue armor. Nothing here should leave you sore.',
+    why: 'This day trains the skills that don’t need fresh legs: rhythm, landing and balance control in real positions, and the tendons and small muscles that keep you healthy. Keeping it easy protects your two high days.',
+    stop: 'If anything here makes you sore the next day, cut it back. This day should leave you feeling better than when you started.',
+    blocks: [
+      { id: 'prep', time: '0–5', name: 'Prep', ex: ['march', 'legswing', 'wgs', 'pogo'], rx: ['March, leg swings, world’s greatest stretch, 2 × 10 small pogos'] },
+      { id: 'feet', time: '5–12', name: 'Rhythm & feet', ex: ['linehops', 'ankledribble'],
+        rx: ['Line hops 4 × 10 s each pattern, single-leg 2 × 8 s/leg, ankle dribbles in place'], dl: 'Half the bouts',
+        how: 'Forward–back, side–side, scissors. Quick and quiet.' },
+      { id: 'control', time: '12–24', name: 'Body control', ex: ['clock', 'slstance', 'fallrecover', 'shadow'],
+        rx: ['Clock 2 rounds/leg · SL stance 2 × 30 s with wall-ball catches · fall-and-recover 4 × 2 · shadow evasion 3 × 30 s at 50%',
+          'Same, harder: eyes closed or dual-task stance · shadow evasion 3 × 30 s',
+          'More random: friend calls directions · faster shadow evasion (~70%)'],
+        dl: '1 round of each' },
+      { id: 'armor', time: '24–36', name: 'Armor', ex: ['copenhagen', 'calfraise', 'tibraise', 'splitiso'],
+        rx: ['Copenhagen (short lever) 3 × 15–30 s/side · SL calf raise 2 × 10/leg straight + bent knee · tib raises 2 × 20 · split-squat hold 2 × 30 s/leg',
+          'Same, with long-lever Copenhagen', 'Same, long-lever Copenhagen, longer holds'],
+        dl: '1 set of each' },
+      { id: 'done', time: '36–38', name: 'Done: easy breathing', rx: ['2 minutes'],
+        how: 'Lie on your back, feet up on the couch, slow breaths through your nose. No cool-down jog needed. Research shows active cool-downs don’t speed recovery.' },
+    ],
+  },
+};
+
+const PHASES = [
+  { n: 1, name: 'Re-entry', weeks: '1–4', summary: 'Learn the drills at 85–90%. Week 2 is the baseline test.' },
+  { n: 2, name: 'Build', weeks: '5–8', summary: 'Full effort. Drop jumps start. Harder balance work.' },
+  { n: 3, name: 'Express', weeks: '9–12', summary: 'Full effort, more max reps, flying 10s, more randomness.' },
+];
+
+const TESTS = [
+  { id: 'touch', name: 'Approach touch, no ball', unit: 'len', better: 'high', ex: 'approach',
+    how: 'Put chalk on your fingertips and do a max approach jump at a wall or garage door, or touch the net or backboard at a court. Measure the highest mark from the floor. Best of 3. In week 2, test both one-foot and two-foot takeoffs and keep the takeoff that touches higher.' },
+  { id: 'touchBall', name: 'Approach touch, with ball', unit: 'len', better: 'high', ex: 'approach',
+    how: 'Same, while holding a basketball. Measure where the ball touches. Best of 3.' },
+  { id: 'broad', name: 'Broad jump', unit: 'len', better: 'high', ex: 'broad',
+    how: 'From a line, measure to the back of your closest heel. The landing must be stuck. Best of 3.' },
+  { id: 'sprint', name: '10-yd sprint', unit: 's', better: 'low', ex: 'accel', frames: true,
+    how: 'Film from the side at 240 fps (slo-mo) with the camera level with the finish line. Time = frames from your first movement to your torso crossing the line ÷ 240. Use the calculator below. Best of 3, with 2 minutes rest.' },
+  { id: 'shuttle', name: '5-10-5 shuttle', unit: 's', better: 'low', ex: 'shuttle', frames: true,
+    how: 'Fits a 10-yard-wide yard. Film it and count frames like the sprint. Best of 2, one starting each way.' },
+  { id: 'hopL', name: 'SL hop-and-stick, left', unit: 'len', better: 'high', ex: 'slhop',
+    how: 'On your left leg, hop forward as far as you can and stick the landing for 2 seconds. Measure toe line to heel. Best of 2.' },
+  { id: 'hopR', name: 'SL hop-and-stick, right', unit: 'len', better: 'high', ex: 'slhop', how: 'Same, on your right leg.' },
+];
+
+const SMOOTH = [
+  { id: 'head', label: 'Head stays level (little bob)' },
+  { id: 'arms', label: 'Arms swing forward-back, not across the body' },
+  { id: 'face', label: 'Face and shoulders relaxed' },
+  { id: 'feet', label: 'Feet land under the hips, not out in front' },
+];
+
+const CUES = [
+  ['Approach jump', 'Jump through the target'],
+  ['Acceleration', 'Push the ground behind you'],
+  ['Rhythm runs', 'Quiet feet, loose face'],
+  ['Cuts', 'Push the grass away from you'],
+  ['Landings', 'Land like a cat'],
+];
+
+const RESEARCH = [
+  { title: 'Balance is almost entirely task-specific', level: 'Strong',
+    plain: 'Getting better at one balance task barely helps others. Six weeks of slackline training made people better on a slackline, not on general balance tests.',
+    forYou: 'Kamara isn’t good at “balance.” He’s good at staying organized while he plants, gets hit and changes direction at speed. So you train those positions (hop-and-stick, fall-and-recover, shadow evasion), not a wobble board.',
+    src: [['Kümmel et al. 2016, Sports Medicine (meta-analysis)', 'https://link.springer.com/article/10.1007/s40279-016-0515-z'], ['Ringhof et al. 2019, slackline in handball players', 'https://onlinelibrary.wiley.com/doi/10.1080/17461391.2018.1534992'], ['J Appl Physiol 2024, transfer depends on specificity', 'https://journals.physiology.org/doi/full/10.1152/japplphysiol.00695.2024']] },
+  { title: 'Mixing up drills helps a little, maybe', level: 'Mixed',
+    plain: 'Practicing in random order (instead of the same drill over and over) helped transfer by a medium amount overall. But in real-world sports studies the effect was small and not statistically clear, and one 2023 review called it a myth in sport practice.',
+    forYou: 'Session C still mixes drills because it costs nothing. Don’t expect much from that alone.',
+    fix: 'The original write-up said “a medium effect overall.” That’s true in lab studies, but weaker in sports settings.',
+    src: [['Contextual interference and transfer, meta-analysis 2024', 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11349744/'], ['“The myth of contextual interference” in sports practice, 2023', 'https://www.sciencedirect.com/science/article/abs/pii/S1747938X23000301']] },
+  { title: 'Reactive agility is its own skill', level: 'Moderate',
+    plain: 'Reacting to something (a defender, a cue) is a different skill from straight-line speed or running a planned cone drill. Three weeks of reactive training sped up decision time in rugby league players, and decision time had nothing to do with sprint speed. A reactive test separated better players from weaker ones, and sprint and planned agility tests didn’t.',
+    forYou: 'Most agility reps here react to a cue. There’s no agility ladder: a 2026 trial of 64 college basketball players found random-cue training beat ladder training for change of direction, reaction time and basketball skills.',
+    fix: 'The study numbers check out, but the samples are small (the 2011 study had 15 players). I couldn’t confirm the exact “6% faster” figure from the original write-up. The main finding still holds.',
+    src: [['Serpell, Young & Ford 2011, JSCR', 'https://www.researchgate.net/publication/46256173_Are_the_Perceptual_and_Decision-Making_Components_of_Agility_Trainable_A_Preliminary_Investigation'], ['Sheppard et al. 2006, reactive agility test', 'https://www.sciencedirect.com/science/article/abs/pii/S1440244006001198'], ['Computerized vs rope ladder training, 2026 RCT', 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12953069/']] },
+  { title: 'Smoothness is partly where your attention goes', level: 'Mixed',
+    plain: 'Thinking about an outside target (“push the ground away”) instead of your body parts (“extend your knee”) seems to make movement more automatic and fluid. The big 2021 meta-analysis found a small benefit. A 2024 re-analysis that corrected for selective publishing found the effect may be close to zero.',
+    forYou: 'It costs nothing, so every cue in this app is external. Pick one cue per drill and never think about your knees or hips mid-rep. Just don’t expect magic.',
+    src: [['Chua et al. 2021, Psychological Bulletin', 'https://pure.psu.edu/en/publications/superiority-of-external-attentional-focus-for-motor-performance-a/'], ['McKay et al. 2024, “Reporting bias, not external focus”', 'https://pubmed.ncbi.nlm.nih.gov/39480294/']] },
+  { title: '“Floating”: muscle slack and pretension (coach opinion)', level: 'Opinion',
+    plain: 'Coach Frans Bosch says bouncy athletes take the “slack” out of their muscles before the foot hits the ground. They pre-tense, stay tall, and keep ground contacts short with little joint bending. He also argues that too much bodybuilding-style training can add slack.',
+    forYou: 'That’s not a reason to stop bodybuilding. It’s why every session has elastic work (pogos, reactive hops, ankle dribbles, A-skips). Bosch is respected and also polarizing, so treat this as informed opinion, not settled science.',
+    src: [['Sprint training mechanics: Frans Bosch', 'https://excelsiorgroup.co.uk/sprint-training-mechanics-frans-bosch/'], ['Review of Bosch’s book', 'https://www.bettermovement.org/blog/2016/review-of-strength-training-and-coordination-an-integrative-approach-by-frans-bosch-i0SDK']] },
+  { title: 'Single-leg training carries over to single-leg tasks', level: 'Moderate',
+    plain: 'Single-leg lifting improved single-leg jumping much more than two-leg lifting did (a large effect). For change of direction the difference was small and not statistically clear.',
+    forYou: 'Cuts and (probably) your dunk are single-leg actions, so the program leans that way: split squats, single-leg hops and skaters.',
+    src: [['Liao et al. 2022, Biology of Sport (meta-analysis)', 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9331349/'], ['Unilateral vs bilateral in basketball players, 2026 meta-analysis', 'https://pmc.ncbi.nlm.nih.gov/articles/PMC13310738/']] },
+  { title: 'Injury armor that’s actually supported', level: 'Strong',
+    plain: 'Structured neuromuscular warm-ups (FIFA 11+) cut injuries by about 41% compared with a general warm-up, and improved agility and 20 m sprint times. A Copenhagen-plank program cut groin problems by 41% in a large trial, though other studies are mixed. Programs that include Nordics cut hamstring injuries by about half.',
+    forYou: 'The 9 borrows the 11+ structure. Copenhagens and Nordics are your groin and hamstring insurance.',
+    fix: 'The full 11+ takes about 20 minutes. The 9 is a shorter version built on the same idea, and nobody has tested it directly. I added the Nordic evidence (about 51% fewer hamstring injuries).',
+    src: [['FIFA 11+ vs general warm-up, meta-analysis', 'https://www.researchgate.net/publication/345130977_EFFECT_OF_FIFA_11_AND_FIFA_11_INJURY_PREVENTION_PROGRAM_VS_GENERAL_WARM-UP_ON_PHYSICAL_PERFORMANCE_AND_INJURY_RATE_IN_ATHLETIC_POPULATION_A_SYSTEMATIC_REVIEW_AND_META-ANALYSIS'], ['Harøy et al. 2019, BJSM (Copenhagen)', 'https://pubmed.ncbi.nlm.nih.gov/29891614/'], ['van Dyk et al. 2019, BJSM (Nordic)', 'https://www.csp.org.uk/frontline/article/nordic-hamstring-exercise-halves-hamstring-injury']] },
+  { title: 'Recovery math: why leg day placement matters', level: 'Strong',
+    plain: 'Heavy lifting and jump training slow down sprinting and cutting for up to 72 hours. Fatigue cleared by 48 hours after jump training, and by 72 hours after heavy squats or sprint training. Training to failure adds another 24–48 hours of recovery.',
+    forYou: 'Do leg day on the same day as A or B, after the session. Never the day before A or B. Leave 1–2 reps in the tank on leg lifts.',
+    src: [['Harrison et al. 2024, Biology of Sport (meta-analysis)', 'https://pmc.ncbi.nlm.nih.gov/articles/PMC11167466'], ['Thomas et al. 2018, MSSE', 'https://www.researchgate.net/publication/326760536_Neuromuscular_Fatigue_and_Recovery_after_Heavy_Resistance_Jump_and_Sprint_Training'], ['Morán-Navarro et al. 2017 (training to failure)', 'https://www.semanticscholar.org/paper/Time-course-of-recovery-following-resistance-or-not-Mor%C3%A1n-Navarro-P%C3%A9rez/c49b956f3e3009ce67f3091e4a15d23ab0f696f6']] },
+  { title: 'Cool-downs are mostly ritual', level: 'Moderate',
+    plain: 'A major review found active cool-downs don’t improve same-day or next-day performance, and don’t reduce soreness or muscle-damage markers.',
+    forYou: 'No cool-down jog. The last few minutes of each session are low-intensity work that has a job (ball control, Nordics, breathing).',
+    src: [['Van Hooren & Peake 2018, Sports Medicine', 'https://link.springer.com/content/pdf/10.1007/s40279-018-0916-2.pdf']] },
+  { title: 'From round one (still holds)', level: 'Strong',
+    plain: 'Two hard plyometric days beat four. Plyometrics plus lifting beats either one alone. Sprinting itself is the best sprint training.',
+    forYou: 'That’s why there are exactly two high days, each followed by your leg lifting.',
+    src: [['Combined resistance + plyometric training, network meta-analysis', 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12903741']] },
+];
+
+const GLOSSARY = [
+  ['Rep', 'One time through the movement. One jump = one rep.'],
+  ['Set', 'A group of reps done back to back. “3 × 4” means 3 sets of 4 reps.'],
+  ['Foot contact', 'Each time your feet hit the ground in a jump drill. It’s how jump volume is counted.'],
+  ['Full effort / full intent', 'Trying to be as fast or explosive as possible while staying relaxed. Not tense and grinding.'],
+  ['% effort', '70% is fast but comfortable. 85% is fast and controlled. 90%+ is nearly all-out. Full is everything you have.'],
+  ['Reps in reserve (RIR)', 'How many more reps you could have done. “1–2 RIR” means stop with 1–2 good reps left.'],
+  ['Deload', 'A lighter week (weeks 4, 8, 12): about half the reps, same quality. Fitness shows up after rest.'],
+  ['Phase', 'A 4-week block with one focus. Re-entry, Build, Express.'],
+  ['Plyometric', 'Any jump or bound that uses a quick stretch-and-recoil of muscles and tendons.'],
+  ['Reactive / elastic', 'Bouncing off the ground with short contacts, like a spring.'],
+  ['Ground contact time', 'How long your foot is on the ground. Shorter is springier.'],
+  ['Unilateral', 'One leg at a time.'],
+  ['Plant', 'The step where you put your foot down hard to change direction or jump.'],
+  ['Deceleration', 'Slowing down or stopping. It’s where joints take the biggest forces.'],
+  ['Athletic stance', 'Feet a bit wider than hips, knees and hips bent, chest over knees, weight on the balls of your feet.'],
+  ['External cue', 'A cue about the outside world (“push the grass away”) instead of your body (“bend your knee”).'],
+  ['Soleus', 'The deep calf muscle. Trained best with the knee bent.'],
+  ['Adductors', 'Inner-thigh (groin) muscles. Copenhagen planks train them.'],
+  ['Tibialis', 'The muscle on the front of your shin that lifts your toes.'],
+  ['Isometric', 'Holding a position without moving, like the split-squat hold.'],
+  ['240 fps', 'The slow-motion video setting on iPhone (Settings → Camera → Record Slo-mo). Each frame = 1/240 of a second.'],
+];
+
+/* ---------- App ---------- */
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const ORDER = ['A', 'C', 'B'];
+  const TEST_WEEKS = [2, 8, 12];
+  const DELOAD = [4, 8, 12];
+  const phaseOf = w => (w <= 4 ? 1 : w <= 8 ? 2 : 3);
+
+  const ICON = {
+    chev: '<svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4l6 6-6 6"/></svg>',
+    check: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>',
+    warn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/></svg>',
+    ext: '<svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 4H4v12h12v-4M11 3h6v6M17 3l-8 8"/></svg>',
+    timer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg>',
+    train: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18l5-6 4 3 7-9"/><circle cx="20" cy="6" r="1.5"/></svg>',
+    tests: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+    log: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11M3 14.5h18"/></svg>',
+    guide: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z"/><path d="M4 21V5M9 8h6"/></svg>',
+  };
+
+  /* ---------- state ---------- */
+  const KEY = 'spring12-state-v1';
+  const fresh = () => ({ v: 1, round: 1, week: 1, checks: {}, sess: {}, log: [], tests: {}, settings: { takeoff: '', reach: '', awake: true }, updatedAt: 0 });
+  const normalize = s => { const f = fresh(); s = Object.assign(f, s || {}); s.settings = Object.assign(fresh().settings, s.settings || {}); return s; };
+  let S = (() => { try { const r = localStorage.getItem(KEY); if (r) return normalize(JSON.parse(r)); } catch (e) {} return fresh(); })();
+  let ui = (() => { try { return Object.assign({ tab: 'train', session: null }, JSON.parse(localStorage.getItem(KEY + '-ui') || '{}')); } catch (e) { return { tab: 'train', session: null }; } })();
+  const saveUI = () => { try { localStorage.setItem(KEY + '-ui', JSON.stringify(ui)); } catch (e) {} };
+
+  const cloud = { ref: null, timer: 0, writing: false, again: false, on: false };
+  function commit() {
+    S.updatedAt = Date.now();
+    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+    if (cloud.ref) { clearTimeout(cloud.timer); cloud.timer = setTimeout(flush, 900); }
+  }
+  async function flush() {
+    if (!cloud.ref) return;
+    if (cloud.writing) { cloud.again = true; return; }
+    cloud.writing = true;
+    try { await cloud.ref.set(JSON.parse(JSON.stringify(S))); setSync(true); }
+    catch (e) { if (e && (e.code === 'invalid_argument' || e.code === 'revoked')) { cloud.ref = null; setSync(false); } }
+    cloud.writing = false;
+    if (cloud.again) { cloud.again = false; flush(); }
+  }
+  function setSync(on) { cloud.on = on; $$('.sync').forEach(el => { el.classList.toggle('on', on); el.lastElementChild.textContent = on ? 'Synced' : 'On this device'; }); }
+  async function connect() {
+    try {
+      if (!window.claude || !window.claude.use) return;
+      const [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+      if (!db || !user) return;
+      const id = await user.id(); if (!id) return;
+      const ref = db.collection('data/users/' + id).doc('spring12');
+      const snap = await ref.get();
+      cloud.ref = ref;
+      if (snap.exists) {
+        const remote = normalize(JSON.parse(JSON.stringify(snap.data())));
+        if ((remote.updatedAt || 0) > (S.updatedAt || 0)) { S = remote; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} render(); }
+        else if ((S.updatedAt || 0) > (remote.updatedAt || 0)) flush();
+      } else if (S.updatedAt) flush();
+      setSync(true);
+    } catch (e) { /* stay local */ }
+  }
+
+  /* ---------- helpers ---------- */
+  const wk = () => `r${S.round}w${S.week}`;
+  const blockKey = (sid, bid) => `${wk()}-${sid}-${bid}`;
+  const logFor = (sid, w = S.week, r = S.round) => S.log.find(e => e.id === `r${r}w${w}-${sid}`);
+  const doneCount = sid => SESSIONS[sid].blocks.filter(b => S.checks[blockKey(sid, b.id)]).length;
+  const isDeload = () => DELOAD.includes(S.week);
+  const isTestWeek = () => TEST_WEEKS.includes(S.week);
+  const rxFor = b => { if (isDeload() && b.dl) return b.dl; const p = phaseOf(S.week); return b.rx[Math.min(p, b.rx.length) - 1]; };
+  const exFor = b => b.exByPhase ? b.exByPhase[phaseOf(S.week) - 1] : (b.ex || []);
+  const TEST_BLOCKS = { approach: 'touch + touch with ball', broad: 'broad jump', single: 'single-leg hop-and-stick', accel: '10-yd sprint', cuts: '5-10-5 shuttle', rhythm: 'smoothness video' };
+  function toast(msg) { const t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); }
+
+  const parseLen = str => {
+    if (str == null) return null; const s = String(str).trim(); if (!s) return null;
+    let m = s.match(/^(\d+(?:\.\d+)?)\s*(?:'|’|ft|f)\s*(\d+(?:\.\d+)?)?\s*(?:"|”|in)?$/i);
+    if (m) return parseFloat(m[1]) * 12 + (m[2] ? parseFloat(m[2]) : 0);
+    m = s.match(/^(\d+)\s+(\d+(?:\.\d+)?)$/); if (m) return parseInt(m[1]) * 12 + parseFloat(m[2]);
+    m = s.match(/^(\d+(?:\.\d+)?)\s*(?:"|”|in)?$/i); if (m) return parseFloat(m[1]);
+    return null;
+  };
+  const fmtLen = n => { if (n == null || isNaN(n)) return ''; const r = Math.round(n * 2) / 2; const ft = Math.floor(r / 12), inch = r - ft * 12; return `${ft}′ ${inch % 1 ? inch.toFixed(1) : inch}″`; };
+  const parseVal = (t, v) => t.unit === 'len' ? parseLen(v) : (v === '' || v == null ? null : (isNaN(parseFloat(v)) ? null : parseFloat(v)));
+  const fmtVal = (t, n) => n == null ? '' : t.unit === 'len' ? fmtLen(n) : n.toFixed(2) + ' s';
+
+  /* ---------- pieces ---------- */
+  function exCard(id, opts = {}) {
+    const e = EX[id]; if (!e) return '';
+    let demo = e.demo; if (id === 'approach' && S.settings.takeoff === 'one') demo = e.demoOne;
+    const steps = (e.steps || []).map(s => {
+      if (s === 'TAKEOFF') return `<li>${esc(e.takeoff[S.settings.takeoff || 'none'])}</li>`;
+      return `<li>${esc(s)}</li>`;
+    }).join('');
+    const extra = [];
+    if (e.mistakes) extra.push(`<details class="mini"><summary>${ICON.chev}Common mistakes</summary><div><ul>${e.mistakes.map(m => `<li>${esc(m)}</li>`).join('')}</ul></div></details>`);
+    if (e.easier || e.harder) extra.push(`<details class="mini"><summary>${ICON.chev}Make it easier or harder</summary><div>${e.easier ? `<p><b>Easier:</b> ${esc(e.easier)}</p>` : ''}${e.harder ? `<p style="margin-top:6px"><b>Harder:</b> ${esc(e.harder)}</p>` : ''}</div></details>`);
+    if (e.why) extra.push(`<details class="mini"><summary>${ICON.chev}Why it’s in the program</summary><div><p>${esc(e.why)}</p></div></details>`);
+    return `<details class="ex" ${opts.open ? 'open' : ''}><summary>${ICON.chev}<span class="nm">${esc(e.name)}</span>${e.dose && !opts.noDose ? `<span class="ds">${esc(e.dose)}</span>` : ''}</summary>
+      <div class="ex-body">
+        ${demo ? `<div class="demo" data-scene="${demo}"></div>` : ''}
+        ${e.what ? `<p>${esc(e.what)}</p>` : ''}
+        ${e.cue ? `<div class="cue"><b>Cue</b><q>${esc(e.cue)}</q></div>` : ''}
+        ${steps ? `<h4>How to do it</h4><ol>${steps}</ol>` : ''}
+        ${e.phaseNote ? `<p class="note">${esc(e.phaseNote)}</p>` : ''}
+        ${e.safety ? `<p class="note">${esc(e.safety)}</p>` : ''}
+        ${extra.join('')}
+        ${e.video ? `<a class="ext" href="${YT(e.video)}" target="_blank" rel="noopener">Watch real videos on YouTube ${ICON.ext}</a>` : ''}
+      </div></details>`;
+  }
+
+  function weekHeader() {
+    const p = phaseOf(S.week), ph = PHASES[p - 1];
+    const chips = Array.from({ length: 12 }, (_, i) => {
+      const w = i + 1, n = ['A', 'B', 'C'].filter(s => logFor(s, w)).length;
+      return `<button class="chip p${phaseOf(w)} ${w === S.week ? 'cur' : ''}" data-week="${w}" aria-label="Week ${w}, ${n} of 3 sessions logged"><span class="bar"><b style="width:${(n / 3) * 100}%"></b></span><span class="lbl">${w}</span></button>`;
+    }).join('');
+    return `<div class="week">
+        <button class="icon-btn" data-act="wk-" ${S.week <= 1 ? 'disabled' : ''} aria-label="Previous week">‹</button>
+        <div class="week-mid"><div class="week-num">Week ${S.week} <span>/ 12</span></div><div class="week-sub">Phase ${p} · ${ph.name}${S.round > 1 ? ` · Round ${S.round}` : ''}${isDeload() ? ' · Deload' : ''}</div></div>
+        <button class="icon-btn" data-act="wk+" ${S.week >= 12 ? 'disabled' : ''} aria-label="Next week">›</button>
+      </div>
+      <div class="strip">${chips}</div>
+      <div class="phase-key"><span>Re-entry</span><span>Build</span><span>Express</span></div>`;
+  }
+
+  /* ---------- views ---------- */
+  function viewTrain() {
+    const next = ORDER.find(s => !logFor(s));
+    const banners = [];
+    if (isTestWeek()) banners.push(`<div class="banner test"><strong>${S.week === 2 ? 'Baseline test week' : 'Retest week'}</strong><p>${S.week === 2 ? 'Run the tests inside Sessions A and B this week. Blocks marked <span class="tag">Test</span> become test reps. Test both one-foot and two-foot takeoffs and keep the one that touches higher.' : 'At the end of this week, run the tests inside your (lighter) Sessions A and B. Blocks marked <span class="tag">Test</span> become test reps.'}</p><button class="btn small ghost" data-act="go-tests">Open the test sheet</button></div>`);
+    if (isDeload()) banners.push(`<div class="banner deload"><strong>Deload week</strong><p>About half the reps and sets, same quality. This is when the last three weeks of work actually sink in. The app has already cut the numbers for you.</p></div>`);
+    const cards = ORDER.map(sid => {
+      const s = SESSIONS[sid], d = doneCount(sid), n = s.blocks.length, lg = logFor(sid);
+      const st = lg ? '<span class="pill done">Logged</span>' : d ? `<span class="pill prog">${d}/${n} done</span>` : `<span class="pill ${s.level === 'High' ? 'hi' : 'lo'}">${s.level}</span>`;
+      return `<button class="sess s-${sid}" data-open="${sid}"><span class="badge">${sid}</span><span><h3>${esc(s.name)}</h3><span class="meta">~${s.minutes} min · ${esc(s.where)}</span></span>${st}</button>`;
+    }).join('');
+    const nextCard = next
+      ? `<div class="card next s-${next}"><div><div class="eyebrow">Next up</div><h2 style="margin-top:4px">Session ${next}: ${esc(SESSIONS[next].name)}</h2></div><button class="btn s" data-open="${next}">Start</button></div>`
+      : `<div class="card"><div class="eyebrow">Week ${S.week} complete</div><h2>All three sessions logged.</h2>${S.week < 12 ? `<button class="btn" data-act="wk+">Go to week ${S.week + 1}</button>` : `<p class="muted">You finished the 12 weeks. Start a new round from the Guide tab (Your setup) and set new targets from your week-12 tests.</p>`}</div>`;
+    return `<div class="view">
+      ${banners.join('')}
+      ${nextCard}
+      <div><div class="eyebrow" style="margin-bottom:8px">This week · suggested order A → C → B</div><div class="sess-list">${cards}</div></div>
+      <div class="card" style="gap:0">
+        <details class="fold"><summary>${ICON.chev}The 3 rules that matter most</summary><div class="fold-body">
+          <ol><li><b>Leg day goes on an A or B day, after the session.</b> Same day, right after or later. The day after A is OK. Never the day before A or B.</li>
+          <li><b>Leave 1–2 reps in reserve</b> on leg lifts, and keep loads below where you cramp.</li>
+          <li><b>Stop a jump block</b> when two reps in a row clearly fall short of your best.</li></ol>
+          <p class="muted small">Why: heavy legs and jumping slow your sprinting and cutting for up to 72 hours. See Guide → What the research says.</p></div></details>
+        <details class="fold"><summary>${ICON.chev}How a week works</summary><div class="fold-body">
+          <p>Three sessions a week: two high-intensity (A and B) and one low (C). Put at least one day between A and B. C fits anywhere, even the day before a game.</p>
+          <p>A fourth session would put a high day inside the 72-hour fatigue window from leg day, and the research says it wouldn’t help anyway.</p>
+          <p><b>Flag football or pickup game that week?</b> It replaces Session B. Do B’s Nordics at the end of Session A instead.</p>
+          <p><b>Only 2 gym days?</b> Put both right after A and B.</p></div></details>
+        <details class="fold"><summary>${ICON.chev}What you need</summary><div class="fold-body">
+          <ul><li>A basketball</li><li>6–8 markers (shoes, water bottles)</li><li>Sidewalk chalk + a wall or garage door for jump testing</li><li>Cleats for grass</li><li>Your phone (slo-mo video + this app)</li><li>A couch (Nordics, Copenhagens) and a stair (calf raises)</li><li>A friend helps for reactive drills but isn’t required</li></ul>
+          <p class="muted small">No equipment to borrow. Everything works in a backyard about 10 yards wide.</p></div></details>
+        <details class="fold"><summary>${ICON.chev}Rain, wet grass and indoors</summary><div class="fold-body">
+          <ul><li><b>Rain:</b> do Session C that day and push the high session to the next dry day.</li><li><b>Wet grass:</b> cleats on, and keep cuts below max.</li><li><b>Indoors:</b> never do max jumps inside. Your ceiling is about 8 feet, and your head goes higher than that.</li></ul></div></details>
+      </div>
+    </div>`;
+  }
+
+  function viewSession(sid) {
+    const s = SESSIONS[sid], ses = S.sess[`${wk()}-${sid}`] || {}, lg = logFor(sid);
+    const rows = s.blocks.map(b => {
+      const k = blockKey(sid, b.id), on = !!S.checks[k];
+      const testTag = isTestWeek() && TEST_BLOCKS[b.id] ? `<span class="tag">Test</span>` : '';
+      let body = '';
+      if (b.warmup) {
+        body = `<p class="small muted">Same routine every time so it becomes automatic. It’s built on the FIFA 11+ model. Set your markers out during the walk-backs on the skip series.</p>
+          <div class="nine">${NINE.map(n => `<div class="nine-row"><span class="t">${n.min}</span><span>${esc(n.what)}</span></div>`).join('')}</div>
+          ${NINE.flatMap(n => n.ex).map(id => exCard(id)).join('')}`;
+      } else {
+        const exs = exFor(b);
+        body = `${b.how ? `<p class="how">${esc(b.how)}</p>` : ''}
+          ${testTag ? `<p class="note">Test week: today this block is your <b>${TEST_BLOCKS[b.id]}</b> test. Log the result on the Tests tab.</p>` : ''}
+          ${exs.map(id => exCard(id)).join('')}
+          ${b.rx.length > 1 ? `<details class="mini"><summary>${ICON.chev}How this block changes by phase</summary><div><ol>${b.rx.map((r, i) => `<li${phaseOf(S.week) === i + 1 ? ' style="font-weight:600"' : ''}>Phase ${i + 1}: ${esc(r)}</li>`).join('')}</ol>${b.dl ? `<p class="small muted" style="margin-top:6px">Deload weeks: ${esc(b.dl)}</p>` : ''}</div></details>` : ''}`;
+      }
+      return `<div class="row ${on ? 'checked' : ''}" data-row="${b.id}">
+        <details><summary><span class="t">${b.time}</span><span><span class="bn"><span class="label">${esc(b.name)}</span>${testTag}</span><span class="rx"><b>${esc(rxFor(b))}</b></span></span></summary>
+        <div class="row-body">${body}</div></details>
+        <button class="chk" data-chk="${b.id}" aria-pressed="${on}" aria-label="Mark ${esc(b.name)} done"><i>${ICON.check}</i></button>
+      </div>`;
+    }).join('');
+    const eff = ses.effort || 0;
+    return `<div class="view s-${sid}">
+      <button class="back" data-act="back">‹ All sessions</button>
+      <div class="s-head"><span class="badge">${sid}</span><div><div class="eyebrow">Session ${sid} · Week ${S.week}</div><h1>${esc(s.name)}</h1></div></div>
+      <div class="chips"><span class="pill ${s.level === 'High' ? 'hi' : 'lo'}">${s.level} intensity</span><span class="pill">~${s.minutes} min</span><span class="pill">${esc(s.where)}</span>${isDeload() ? '<span class="pill dl">Deload</span>' : ''}${isTestWeek() && sid !== 'C' ? '<span class="pill test">Test week</span>' : ''}</div>
+      <p>${esc(s.intro)}</p>
+      <div class="card" style="gap:0;padding-block:4px">
+        <details class="fold"><summary>${ICON.chev}Why this session exists</summary><div class="fold-body"><p>${esc(s.why)}</p>${s.contacts ? `<p class="small muted">Jump volume this phase: ${esc(s.contacts[phaseOf(S.week) - 1])}.</p>` : ''}</div></details>
+        <details class="fold"><summary>${ICON.chev}What you need</summary><div class="fold-body"><p>${esc(s.gear)}</p></div></details>
+        <details class="fold"><summary>${ICON.chev}How to use this sheet</summary><div class="fold-body"><p>Each row is one block. The left column is the minute mark. Tap a row to open it for the how-to, demos and the reasons behind it. Tap the box on the right when you finish the block. Use the timer button for holds and rest.</p></div></details>
+      </div>
+      <div class="sheet"><div class="sheet-head"><span>Min</span><span>Block · this week</span><span>Done</span></div>${rows}</div>
+      <div class="stop">${ICON.warn}<p>${esc(s.stop)}</p></div>
+      <div class="card">
+        <h3>Finish & log</h3>
+        <div><label class="lbl" id="eff-l">How hard did it feel? (1 = easy, 10 = max)</label><div class="scale" role="group" aria-labelledby="eff-l">${Array.from({ length: 10 }, (_, i) => `<button data-eff="${i + 1}" aria-pressed="${eff === i + 1}">${i + 1}</button>`).join('')}</div>
+        <div class="scale-key"><span>easy</span><span>${sid === 'C' ? 'C should be 3–5' : 'quality, not exhaustion'}</span><span>max</span></div></div>
+        <div><label class="lbl" for="notes-${sid}">Notes (best touch, how legs felt, anything weird)</label><textarea id="notes-${sid}" data-notes="${sid}" placeholder="e.g. touched the gutter twice, left calf tight">${esc(ses.notes || '')}</textarea></div>
+        <label class="toggle"><input type="checkbox" id="awake" ${S.settings.awake ? 'checked' : ''}> Keep the screen on during this session</label>
+        <button class="btn s" data-act="save" data-sid="${sid}">${lg ? 'Update log entry' : 'Save to log'}</button>
+        ${lg ? `<p class="small muted">Logged ${new Date(lg.date).toLocaleDateString()}. Saving again updates it.</p>` : ''}
+      </div>
+    </div>`;
+  }
+
+  let testWeek = 2;
+  function viewTests() {
+    const r = S.round, cols = TEST_WEEKS;
+    const T = w => S.tests[`r${r}w${w}`] || {};
+    const reach = parseLen(S.settings.reach);
+    const rows = TESTS.map(t => {
+      const vals = cols.map(w => parseVal(t, T(w)[t.id]));
+      const base = vals[0], last = [...vals].reverse().find(v => v != null);
+      let delta = '';
+      if (base != null && last != null && last !== base) {
+        const d = last - base, good = t.better === 'high' ? d > 0 : d < 0;
+        delta = `<span class="delta ${good ? 'up' : 'down'}">${d > 0 ? '+' : '−'}${t.unit === 'len' ? Math.abs(d).toFixed(1) + ' in' : Math.abs(d).toFixed(2) + ' s'} vs baseline</span>`;
+      }
+      let extra = '';
+      if (t.id === 'touch' || t.id === 'touchBall') {
+        const best = vals.filter(v => v != null).reduce((a, b) => Math.max(a, b), 0);
+        if (best) {
+          const lo = 96, hi = 132, pct = x => Math.max(0, Math.min(100, (x - lo) / (hi - lo) * 100));
+          extra = `<div class="meter" aria-label="Best touch ${fmtLen(best)} compared with rim height"><div class="track"><div class="fill" style="width:${pct(best)}%"></div></div><div class="mk" style="left:${pct(120)}%"><span>rim 10′</span></div><div class="mk" style="left:${pct(126)}%;opacity:.6"><span style="top:-14px">10′6″</span></div></div>
+          <p class="small muted">Best: <b class="num">${fmtLen(best)}</b>${reach ? ` · vertical ≈ <b class="num">${(best - reach).toFixed(1)} in</b>` : ''}. Rough rule of thumb: dunking a basketball takes a touch around 6 inches above the rim (10′6″), less with a smaller ball.</p>`;
+        }
+      }
+      const calc = t.frames ? `<details class="mini"><summary>${ICON.chev}Frame calculator</summary><div><div class="calc">
+          <div><label class="lbl" for="f1-${t.id}">Start frame</label><input id="f1-${t.id}" inputmode="numeric" data-f1></div>
+          <div><label class="lbl" for="f2-${t.id}">End frame</label><input id="f2-${t.id}" inputmode="numeric" data-f2></div>
+          <div><span class="calc-out" data-fout>–</span></div></div>
+          <p class="small muted" style="margin-top:6px">Most video apps step one frame at a time when you drag slowly. Note the frame number at first movement and at the finish. Time = (end − start) ÷ 240.</p></div></details>` : '';
+      return `<div class="card">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline"><h3>${esc(t.name)}</h3>${delta}</div>
+        <div class="test-grid">${cols.map((w, i) => `<div><label for="t-${t.id}-${w}">Wk ${w}${i === 0 ? ' · base' : ''}</label><input id="t-${t.id}-${w}" data-test="${t.id}" data-w="${w}" inputmode="${t.unit === 'len' ? 'text' : 'decimal'}" placeholder="–" value="${esc(t.unit === 'len' && vals[i] != null ? fmtLen(vals[i]) : (T(w)[t.id] || ''))}"></div>`).join('')}</div>
+        ${extra}
+        <details class="mini"><summary>${ICON.chev}How to test it</summary><div><p>${esc(t.how)}</p></div></details>
+        ${calc}
+        ${t.ex && EX[t.ex] && EX[t.ex].demo ? `<details class="mini"><summary>${ICON.chev}See the movement</summary><div><div class="demo" data-scene="${t.ex === 'approach' && S.settings.takeoff === 'one' ? 'approach1' : EX[t.ex].demo}"></div></div></details>` : ''}
+      </div>`;
+    }).join('');
+    const sm = T(testWeek).smooth || {};
+    return `<div class="view">
+      <div><div class="eyebrow">Weeks 2, 8 and 12${S.round > 1 ? ` · Round ${S.round}` : ''}</div><h1>Test sheet</h1></div>
+      <p class="muted">Type a result in any box. Lengths take <span class="num">10'4"</span>, <span class="num">10 4</span> or plain inches (<span class="num">124</span>). Times in seconds. Green means better than your week-2 baseline.</p>
+      <div class="card" style="gap:0;padding-block:4px">
+        <details class="fold"><summary>${ICON.chev}Test-day order (do it like this)</summary><div class="fold-body"><ol>
+          <li>The 9 warm-up.</li><li>10-yd sprint × 3 (2 min rest). Sprints first, while you’re fresh.</li><li>5-10-5 × 2, one starting each direction.</li><li>Approach touch × 3, no ball and with ball (week 2: both takeoffs).</li><li>Broad jump × 3.</li><li>Single-leg hop-and-stick × 2 per leg.</li><li>Smoothness video: a side-view slow-mo of a 20-yd run at 90%.</li></ol>
+          <p class="small muted">In test weeks these replace the matching blocks in Sessions A and B. You don’t need an extra day.</p></div></details>
+        <details class="fold"><summary>${ICON.chev}Your standing reach (for vertical jump)</summary><div class="fold-body">
+          <p class="small">Stand side-on to the wall, flat-footed, and reach as high as you can with one hand. Measure from the floor.</p>
+          <input id="reach" data-setting="reach" inputmode="text" placeholder="e.g. 8'2&quot;" value="${esc(reach ? fmtLen(reach) : '')}"></div></details>
+      </div>
+      ${rows}
+      <div class="card">
+        <h3>Smoothness video</h3>
+        <p class="small">Film a side-view slow-mo of a 20-yard run at 90%. This video will show progress before any number does. Compare each test against the last.</p>
+        <div class="tabs-mini" role="group" aria-label="Test week">${cols.map(w => `<button data-sweek="${w}" aria-pressed="${w === testWeek}">Week ${w}</button>`).join('')}</div>
+        <div class="check-list">${SMOOTH.map(c => `<label class="toggle"><input type="checkbox" data-smooth="${c.id}" ${sm[c.id] ? 'checked' : ''}> ${esc(c.label)}</label>`).join('')}</div>
+        <div><label class="lbl" for="smooth-note">Notes for week ${testWeek}</label><textarea id="smooth-note" data-smoothnote placeholder="What looks better or worse than last time?">${esc(sm.note || '')}</textarea></div>
+        <div class="demo" data-scene="sprint"></div>
+      </div>
+    </div>`;
+  }
+
+  function viewLog() {
+    const entries = S.log.slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    const total = S.log.filter(e => e.round === S.round).length;
+    const avgEff = (() => { const e = S.log.filter(x => x.effort); return e.length ? (e.reduce((a, b) => a + b.effort, 0) / e.length).toFixed(1) : '–'; })();
+    const rows = entries.map(e => `<tr data-entry="${e.id}"><td class="num">R${e.round} · W${e.week}</td><td><span class="s-${e.session}" style="color:var(--s);font-weight:700">${e.session}</span> ${esc(SESSIONS[e.session].short)}</td><td class="num">${new Date(e.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</td><td class="num">${e.done}/${e.total}</td><td class="num">${e.effort || '–'}</td><td class="notes">${esc(e.notes || '')}</td><td><button class="btn small ghost" data-del="${e.id}">Delete</button></td></tr>`).join('');
+    return `<div class="view">
+      <div><div class="eyebrow">Your training sheet</div><h1>Log</h1></div>
+      <div class="stats"><div class="stat"><b class="num">${total}<span style="font-size:16px;color:var(--muted)">/36</span></b><span>sessions this round</span></div><div class="stat"><b class="num">${S.week}</b><span>current week</span></div><div class="stat"><b class="num">${avgEff}</b><span>avg effort</span></div></div>
+      ${entries.length ? `<div class="table-wrap"><table><thead><tr><th>Week</th><th>Session</th><th>Date</th><th>Blocks</th><th>Effort</th><th>Notes</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
+        <p class="small muted">Swipe the table sideways to see every column.</p>
+        <button class="btn ghost" data-act="csv" id="csv-btn">Download as spreadsheet (CSV)</button>`
+        : `<div class="card empty"><h3>No sessions logged yet</h3><p>Finish a session, then tap <b>Save to log</b> at the bottom. Each one shows up here as a row, like a spreadsheet.</p><button class="btn" data-act="go-train">Go to this week’s sessions</button></div>`}
+    </div>`;
+  }
+
+  function viewGuide() {
+    const fold = (title, body, open) => `<details class="fold" ${open ? 'open' : ''}><summary>${ICON.chev}${title}</summary><div class="fold-body">${body}</div></details>`;
+    const research = RESEARCH.map(r => `<details class="fold"><summary>${ICON.chev}<span style="flex:1">${esc(r.title)}</span><span class="lvl ${r.level}">${r.level}</span></summary><div class="fold-body">
+        <p>${esc(r.plain)}</p><p><b>What it means for you:</b> ${esc(r.forYou)}</p>
+        ${r.fix ? `<p class="note"><b>Fact-check:</b> ${esc(r.fix)}</p>` : ''}
+        <div class="src">${r.src.map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${esc(t)} ↗</a>`).join('')}</div></div></details>`).join('');
+    const phaseRows = [
+      ['A: approach jumps', ['8 reps at ~85–90%. Week 2 = baseline test.', '10 reps, full intent, half with ball', '10–12 reps, full intent, ⅔ with ball']],
+      ['A: reactive', ['Low reactive hops', 'Drop jumps, 12–18 in', 'Drop jumps at your best height']],
+      ['A: total contacts', ['~40', '~55', '~45–50, more max-effort reps']],
+      ['B: speed & evasion', ['85–90%, reactive at 80%', 'Full intent', 'Full intent + flying 10s, 1v1 if possible']],
+      ['B: cuts', ['75–80%', '90%+', 'Full']],
+      ['C', ['Easiest variants', 'Eyes closed, dual-task, long-lever Copenhagen', 'More random: friend calls directions, faster shadow evasion']],
+    ];
+    const phases = PHASES.map(p => `<div class="card" style="gap:8px"><div class="eyebrow">Phase ${p.n} · weeks ${p.weeks}</div><h3>${p.name}</h3><p class="small">${esc(p.summary)}</p><div class="phase-table">${phaseRows.map(([k, v]) => `<div class="phase-row"><b>${k}</b><span>${esc(v[p.n - 1])}</span></div>`).join('')}</div></div>`).join('');
+    const tk = S.settings.takeoff;
+    return `<div class="view">
+      <div><div class="eyebrow">Everything explained</div><h1>Guide</h1></div>
+      <div class="card" style="gap:0;padding-block:4px">
+        ${fold('Your setup', `
+          <div><label class="lbl">Jump takeoff (decided by your week-2 test)</label><div class="tabs-mini" role="group">${[['', 'Not sure yet'], ['one', 'One-foot'], ['two', 'Two-foot']].map(([v, l]) => `<button data-takeoff="${v}" aria-pressed="${tk === v}">${l}</button>`).join('')}</div></div>
+          <p class="small muted">This changes the approach-jump instructions and demo.</p>
+          <div class="toggle"><span class="sync ${cloud.on ? 'on' : ''}" style="margin:0"><i></i><span>${cloud.on ? 'Synced' : 'On this device'}</span></span></div>
+          <p class="small muted">${cloud.on ? 'Your checkmarks, log and tests are saved to your Claude account, so they show up on any device where you open this link.' : 'Your data is saved on this device. When you open the app signed in to Claude, it also syncs to your account.'}</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn small ghost" data-act="new-round">Start a new 12-week round</button><button class="btn small ghost" data-act="reset">Erase all data…</button></div>
+          <div id="confirm"></div>`, true)}
+        ${fold('Put this app on your home screen', `<ol><li>Open this page in <b>Safari</b> on your iPhone.</li><li>Tap the <b>Share</b> button (the square with an arrow pointing up).</li><li>Scroll down and tap <b>Add to Home Screen</b>, then <b>Add</b>.</li><li>Now it opens from its own icon like any app.</li></ol>`)}
+        ${fold('How this program works (1-minute read)', `<p>Three sessions a week: two hard (A: Jump & Land, B: Speed, Cuts & Evasion) and one easy (C: Control, Rhythm & Armor). Twelve weeks in three 4-week phases. Weeks 4, 8 and 12 are lighter. You test in weeks 2, 8 and 12.</p><p>The days don’t matter. The order does: A → C → B, with at least a day between A and B, and leg day placed right after A or B.</p><p>After week 12, run the cycle again with targets from your retest.</p>`)}
+        ${fold('Effort levels, in plain English', `<dl class="gloss"><dt>70%</dt><dd>Fast but comfortable. Smooth.</dd><dt>80%</dt><dd>Clearly fast, still relaxed.</dd><dt>85–90%</dt><dd>Fast and controlled. Not straining.</dd><dt>Full effort</dt><dd>Everything you have, while staying loose. Tense ≠ fast.</dd></dl>`)}
+        ${fold('Leg day and your bodybuilding', `<p><b>Rule:</b> lower-body gym work goes on the same day as A or B, after the session (right after or later that day). The day after A is acceptable. Never the day before A or B.</p><p>Leave 1–2 reps in reserve on leg compounds and keep loads below your cramp threshold.</p><p>With 2 gym days, put both after A and B.</p>`)}
+        ${fold('If you pick 1–2 gym exercises', `<p>These fit the program best:</p>${exCard('rfess')}${exCard('rdl')}${exCard('seatedcalf')}`)}
+      </div>
+      <div><div class="eyebrow" style="margin-bottom:8px">12-week map</div><div style="display:flex;flex-direction:column;gap:10px">${phases}<p class="small muted">Weeks 4, 8 and 12 run at about half volume, with retests at the end of weeks 8 and 12.</p></div></div>
+      <div class="card"><h3>Cue sheet</h3><p class="small muted">Pick one cue per drill. Never think about your knees or hips mid-rep.</p><div class="cue-sheet">${CUES.map(([a, b]) => `<div><span>${a}</span><q>${b}</q></div>`).join('')}</div></div>
+      <div class="card" style="gap:0;padding-block:4px">
+        <div style="padding:14px 0 4px"><h3>What the research says</h3><p class="small muted" style="margin-top:4px">Each finding is rated by how solid the evidence is. I checked the sources and noted where the original write-up needed adjusting.</p></div>
+        ${research}
+      </div>
+      <div class="card" style="gap:0;padding-block:4px">
+        ${fold('Glossary', `<dl class="gloss">${GLOSSARY.map(([a, b]) => `<dt>${esc(a)}</dt><dd>${esc(b)}</dd>`).join('')}</dl>`)}
+        ${fold('Exercise library (every drill in one place)', Object.keys(EX).map(id => exCard(id)).join(''))}
+        ${fold('Honest close', `<p>A real share of what makes Kamara and Smith-Njigba look the way they do is genetics, limb proportions and tens of thousands of game reps.</p><p>What you can move: reactive decision speed, landing and plant control, elastic stiffness, relaxation and rhythm. Those are what this program trains.</p><p>The single biggest smoothness accelerator is something you’re already doing: playing. Flag football and pickup are exactly the stimulus-driven, unpredictable reps the agility research favors. The program builds the engine, and the games teach you to drive it.</p>`)}
+      </div>
+    </div>`;
+  }
+
+  /* ---------- render ---------- */
+  const TABS = [['train', 'Train'], ['tests', 'Tests'], ['log', 'Log'], ['guide', 'Guide']];
+  function render() {
+    const app = $('#app');
+    const showWeek = ui.tab === 'train' && !ui.session;
+    const head = `<header class="top"><div class="top-row"><span class="brand"><b>Spring</b> 12</span>${!showWeek ? `<span class="pill" style="margin-left:6px">Week ${S.week}</span>` : ''}<span class="sync ${cloud.on ? 'on' : ''}"><i></i><span>${cloud.on ? 'Synced' : 'On this device'}</span></span></div>${showWeek ? weekHeader() : ''}</header>`;
+    let body = '';
+    if (ui.tab === 'train') body = ui.session ? viewSession(ui.session) : viewTrain();
+    else if (ui.tab === 'tests') body = viewTests();
+    else if (ui.tab === 'log') body = viewLog();
+    else body = viewGuide();
+    app.innerHTML = head + body;
+    $('#tabbar').innerHTML = TABS.map(([id, l]) => `<button data-tab="${id}" ${ui.tab === id ? 'aria-current="page"' : ''}>${ICON[id]}${l}</button>`).join('');
+    $('#fab').hidden = !(ui.tab === 'train' && ui.session);
+    mountDemos(app);
+    wake(ui.tab === 'train' && ui.session && S.settings.awake);
+  }
+  function mountDemos(root) {
+    $$('details[open] .demo[data-scene]', root).forEach(d => { if (!d.__anim && SCENES[d.dataset.scene] && d.offsetParent !== null) Anim.mount(d, SCENES[d.dataset.scene]); });
+    $$('.demo[data-scene]', root).forEach(d => { if (!d.closest('details') && !d.__anim) Anim.mount(d, SCENES[d.dataset.scene]); });
+  }
+  let lock = null;
+  async function wake(on) {
+    try {
+      if (on && !lock && navigator.wakeLock) { lock = await navigator.wakeLock.request('screen'); lock.addEventListener('release', () => { lock = null; }); }
+      else if (!on && lock) { await lock.release(); lock = null; }
+    } catch (e) { lock = null; }
+  }
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') wake(ui.tab === 'train' && ui.session && S.settings.awake); });
+
+  /* ---------- events ---------- */
+  document.addEventListener('toggle', e => { if (e.target.open) mountDemos(e.target); }, true);
+
+  let pendingReset = false;
+  document.addEventListener('click', async e => {
+    const t = e.target.closest('button, [data-open]'); if (!t) return;
+    if (t.dataset.tab) { ui.tab = t.dataset.tab; if (t.dataset.tab === 'train' && ui.tab === 'train') ui.session = null; saveUI(); render(); scrollTo(0, 0); return; }
+    if (t.dataset.open) { ui.session = t.dataset.open; ui.tab = 'train'; saveUI(); render(); scrollTo(0, 0); return; }
+    if (t.dataset.week) { S.week = +t.dataset.week; commit(); render(); return; }
+    if (t.dataset.chk) {
+      e.preventDefault(); e.stopPropagation();
+      const k = blockKey(ui.session, t.dataset.chk), on = !S.checks[k];
+      if (on) S.checks[k] = 1; else delete S.checks[k];
+      commit();
+      t.setAttribute('aria-pressed', on); t.closest('.row').classList.toggle('checked', on);
+      return;
+    }
+    if (t.dataset.eff) { const k = `${wk()}-${ui.session}`; S.sess[k] = Object.assign({}, S.sess[k], { effort: +t.dataset.eff }); commit(); $$('[data-eff]').forEach(b => b.setAttribute('aria-pressed', b === t)); return; }
+    if (t.dataset.takeoff !== undefined) { S.settings.takeoff = t.dataset.takeoff; commit(); render(); toast('Takeoff saved'); return; }
+    if (t.dataset.sweek) { testWeek = +t.dataset.sweek; render(); $('[data-sweek="' + testWeek + '"]')?.scrollIntoView({ block: 'center' }); return; }
+    if (t.dataset.del) {
+      if (t.dataset.armed) { S.log = S.log.filter(x => x.id !== t.dataset.del); commit(); render(); toast('Entry deleted'); }
+      else { t.dataset.armed = '1'; t.textContent = 'Tap again to delete'; t.classList.add('danger'); setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = 'Delete'; t.classList.remove('danger'); } }, 3000); }
+      return;
+    }
+    const act = t.dataset.act;
+    if (act === 'wk-' && S.week > 1) { S.week--; commit(); render(); }
+    else if (act === 'wk+' && S.week < 12) { S.week++; commit(); ui.session = null; saveUI(); render(); scrollTo(0, 0); }
+    else if (act === 'back') { ui.session = null; saveUI(); render(); scrollTo(0, 0); }
+    else if (act === 'go-tests') { ui.tab = 'tests'; testWeek = isTestWeek() ? S.week : 2; saveUI(); render(); scrollTo(0, 0); }
+    else if (act === 'go-train') { ui.tab = 'train'; ui.session = null; saveUI(); render(); }
+    else if (act === 'save') {
+      const sid = t.dataset.sid, ses = S.sess[`${wk()}-${sid}`] || {}, id = `${wk()}-${sid}`;
+      const entry = { id, round: S.round, week: S.week, session: sid, date: new Date().toISOString(), done: doneCount(sid), total: SESSIONS[sid].blocks.length, effort: ses.effort || 0, notes: ses.notes || '' };
+      const old = S.log.find(x => x.id === id); if (old) entry.date = old.date;
+      S.log = S.log.filter(x => x.id !== id).concat(entry); commit();
+      toast(old ? 'Log entry updated' : `Session ${sid} saved to your log`);
+      ui.session = null; saveUI(); render(); scrollTo(0, 0);
+    }
+    else if (act === 'csv') {
+      const head = ['Round', 'Week', 'Session', 'Date', 'Blocks done', 'Blocks total', 'Effort', 'Notes'];
+      const rows = S.log.slice().sort((a, b) => a.date.localeCompare(b.date)).map(x => [x.round, x.week, `${x.session} ${SESSIONS[x.session].name}`, x.date.slice(0, 10), x.done, x.total, x.effort || '', x.notes || '']);
+      const testRows = [];
+      Object.entries(S.tests).forEach(([k, v]) => TESTS.forEach(tt => { if (v[tt.id]) testRows.push([k, tt.name, v[tt.id]]); }));
+      const q = c => `"${String(c).replace(/"/g, '""')}"`;
+      const csv = [head, ...rows].map(r => r.map(q).join(',')).join('\n') + (testRows.length ? '\n\n' + [['Test week', 'Test', 'Result'], ...testRows].map(r => r.map(q).join(',')).join('\n') : '');
+      try {
+        const dl = window.claude && window.claude.use ? await window.claude.use('downloads') : null;
+        if (!dl) { toast('Download isn’t available here'); return; }
+        await dl.save({ filename: 'spring12-log.csv', data: csv });
+      } catch (err) { if (!err || err.code !== 'declined') toast('Download isn’t available here'); }
+    }
+    else if (act === 'new-round') {
+      const box = $('#confirm');
+      box.innerHTML = `<div class="banner deload" style="margin-top:10px"><p>Start round ${S.round + 1} at week 1? Your old log and tests stay saved.</p><div style="display:flex;gap:8px"><button class="btn small" data-act="new-round-yes">Start round ${S.round + 1}</button><button class="btn small ghost" data-act="cancel">Cancel</button></div></div>`;
+    }
+    else if (act === 'new-round-yes') { S.round++; S.week = 1; commit(); ui.tab = 'train'; ui.session = null; saveUI(); render(); toast(`Round ${S.round} started`); }
+    else if (act === 'reset') {
+      $('#confirm').innerHTML = `<div class="banner" style="background:var(--hot-soft);margin-top:10px"><p>This erases every checkmark, log entry and test result. It can’t be undone.</p><div style="display:flex;gap:8px"><button class="btn small danger" data-act="reset-yes">Erase everything</button><button class="btn small ghost" data-act="cancel">Cancel</button></div></div>`;
+    }
+    else if (act === 'reset-yes') { const keep = S.settings.takeoff; S = fresh(); S.settings.takeoff = keep; commit(); ui = { tab: 'train', session: null }; saveUI(); render(); toast('All data erased'); }
+    else if (act === 'cancel') { $('#confirm').innerHTML = ''; }
+  });
+
+  let typing = 0;
+  document.addEventListener('input', e => {
+    const t = e.target;
+    if (t.dataset.notes) { const k = `${wk()}-${t.dataset.notes}`; S.sess[k] = Object.assign({}, S.sess[k], { notes: t.value }); clearTimeout(typing); typing = setTimeout(commit, 400); }
+    else if (t.dataset.test) { const k = `r${S.round}w${t.dataset.w}`; S.tests[k] = Object.assign({}, S.tests[k], { [t.dataset.test]: t.value }); clearTimeout(typing); typing = setTimeout(commit, 400); }
+    else if (t.dataset.setting) { S.settings[t.dataset.setting] = t.value; clearTimeout(typing); typing = setTimeout(commit, 400); }
+    else if (t.dataset.smoothnote !== undefined) { const k = `r${S.round}w${testWeek}`; const v = Object.assign({}, S.tests[k]); v.smooth = Object.assign({}, v.smooth, { note: t.value }); S.tests[k] = v; clearTimeout(typing); typing = setTimeout(commit, 400); }
+    else if (t.matches('[data-f1],[data-f2]')) {
+      const c = t.closest('.calc'), a = parseFloat($('[data-f1]', c).value), b = parseFloat($('[data-f2]', c).value);
+      $('[data-fout]', c).textContent = !isNaN(a) && !isNaN(b) && b > a ? ((b - a) / 240).toFixed(2) + ' s' : '–';
+    }
+  });
+  document.addEventListener('change', e => {
+    const t = e.target;
+    if (t.id === 'awake') { S.settings.awake = t.checked; commit(); wake(t.checked); }
+    else if (t.dataset.smooth) { const k = `r${S.round}w${testWeek}`; const v = Object.assign({}, S.tests[k]); v.smooth = Object.assign({}, v.smooth, { [t.dataset.smooth]: t.checked }); S.tests[k] = v; commit(); }
+    else if (t.dataset.test || t.dataset.setting === 'reach') {
+      clearTimeout(typing); commit();
+      if (ui.tab === 'tests') { const y = scrollY; render(); scrollTo(0, y); }
+    }
+  });
+
+  /* ---------- timer ---------- */
+  const tm = { left: 0, total: 0, run: false, last: 0, iv: 0, ctx: null };
+  const fmtT = s => `${Math.floor(s / 60)}:${String(Math.ceil(s % 60) === 60 ? 0 : Math.ceil(s % 60)).padStart(2, '0')}`;
+  function beep() {
+    try {
+      tm.ctx = tm.ctx || new (window.AudioContext || window.webkitAudioContext)();
+      [0, 0.18, 0.36].forEach(d => { const o = tm.ctx.createOscillator(), g = tm.ctx.createGain(); o.frequency.value = 880; o.connect(g); g.connect(tm.ctx.destination); g.gain.setValueAtTime(0.25, tm.ctx.currentTime + d); g.gain.exponentialRampToValueAtTime(0.001, tm.ctx.currentTime + d + 0.15); o.start(tm.ctx.currentTime + d); o.stop(tm.ctx.currentTime + d + 0.16); });
+    } catch (e) {}
+  }
+  function drawTimer() {
+    const big = $('#t-big'); if (big) { big.textContent = fmtT(Math.max(0, tm.left)); big.classList.toggle('done', tm.total > 0 && tm.left <= 0); }
+    const go = $('#t-go'); if (go) go.textContent = tm.run ? 'Pause' : (tm.left > 0 && tm.left < tm.total ? 'Resume' : 'Start');
+    $('#fab-t').textContent = tm.run || (tm.left > 0 && tm.left < tm.total) ? fmtT(Math.max(0, tm.left)) : 'Timer';
+  }
+  function tick() {
+    const now = performance.now(); tm.left -= (now - tm.last) / 1000; tm.last = now;
+    if (tm.left <= 0) { tm.left = 0; tm.run = false; clearInterval(tm.iv); beep(); }
+    drawTimer();
+  }
+  function openTimer() {
+    if ($('.drawer')) return;
+    const sc = document.createElement('div'); sc.className = 'scrim'; sc.dataset.tclose = '1';
+    const d = document.createElement('div'); d.className = 'drawer'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-label', 'Timer');
+    d.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><h3>Timer</h3><button class="btn small ghost" data-tclose="1">Close</button></div>
+      <div id="t-big" class="timer-big" aria-live="polite">0:00</div>
+      <div class="presets">${[10, 15, 20, 30, 45, 60, 90, 120].map(s => `<button data-tset="${s}">${s < 60 ? s + 's' : s / 60 + 'm'}</button>`).join('')}</div>
+      <div class="row-btns"><button class="btn" id="t-go" data-tgo="1">Start</button><button class="btn ghost" data-treset="1">Reset</button></div>
+      <p class="small muted">Beeps when it hits zero. Use it for holds (Copenhagens, stance) and rest between sets.</p>`;
+    document.body.append(sc, d); drawTimer();
+  }
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-tclose],[data-tset],[data-tgo],[data-treset],#fab'); if (!t) return;
+    if (t.id === 'fab') openTimer();
+    else if (t.dataset.tclose) { $$('.drawer,.scrim').forEach(x => x.remove()); }
+    else if (t.dataset.tset) { tm.total = tm.left = +t.dataset.tset; tm.run = false; clearInterval(tm.iv); drawTimer(); }
+    else if (t.dataset.treset) { tm.left = tm.total; tm.run = false; clearInterval(tm.iv); drawTimer(); }
+    else if (t.dataset.tgo) {
+      try { tm.ctx = tm.ctx || new (window.AudioContext || window.webkitAudioContext)(); tm.ctx.resume && tm.ctx.resume(); } catch (er) {}
+      if (tm.run) { tm.run = false; clearInterval(tm.iv); }
+      else { if (tm.left <= 0) { tm.left = tm.total || 30; tm.total = tm.total || 30; } tm.run = true; tm.last = performance.now(); tm.iv = setInterval(tick, 200); }
+      drawTimer();
+    }
+  });
+
+  render();
+  connect();
+})();
+
+</script>
+</body></html>
